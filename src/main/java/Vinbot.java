@@ -2,7 +2,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 
-
 public class Vinbot {
     public static void main(String[] args) {
         boolean isActive = true;    //Defines the operation status of the bot
@@ -28,8 +27,7 @@ public class Vinbot {
             if (line.toLowerCase().equals("bye")) {    //exit loop
                 isActive = false;
                 break;
-            }
-            else if (line.toLowerCase().equals("list")) {    //displays list in array
+            } else if (line.toLowerCase().equals("list")) {    //displays list in array
                 System.out.println(spacing + "Here are the tasks on your list: ^-^");
                 int i = 0;
                 while (storage[i] != null) {
@@ -37,28 +35,25 @@ public class Vinbot {
                     i++;
                 }
                 System.out.println(spacing + starLine);
-            }
-            else if (line.toLowerCase().startsWith("mark")) {
+            } else if (line.toLowerCase().startsWith("mark")) {
                 String intValue = line.replaceAll("[^0-9]", ""); //remove all non integers
                 int integer = Integer.parseInt(intValue) - 1;
                 if (integer >= 0 && integer < 100 && integer <= numberOfElements) {
                     storage[integer].isDone = true;
                     System.out.println("Good job on completing " + storage[integer].description + " [" + storage[integer].getStatusIcon() + "]");
                 }
-            }
-            else if (line.toLowerCase().startsWith("unmark")) {
+            } else if (line.toLowerCase().startsWith("unmark")) {
                 String intValue = line.replaceAll("[^0-9]", ""); //remove all non integers
                 int integer = Integer.parseInt(intValue) - 1;
                 if (integer >= 0 && integer < 100 && integer <= numberOfElements) {
                     storage[integer].isDone = false;
                     System.out.println("Oh, you've unmarked the task " + storage[integer].description + " [" + storage[integer].getStatusIcon() + "] ;-;");
                 }
-            }
-            else {
+            } else {
                 storage[numberOfElements] = new Task(line);
                 numberOfElements++;
                 System.out.println(spacing + emptyLine);
-                System.out.println(spacing + "added: "+ line);
+                System.out.println(spacing + "added: " + line);
                 System.out.println(spacing + starLine);
             }
         }
