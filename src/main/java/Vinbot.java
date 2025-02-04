@@ -37,6 +37,10 @@ public class Vinbot {
                 System.out.println(spacing + starLine);
             } else if (line.toLowerCase().startsWith("mark")) {
                 String intValue = line.replaceAll("[^0-9]", ""); //remove all non integers
+                if (intValue.isEmpty()) {
+                    System.out.println("Error, invalid task marked");
+                    continue;
+                }
                 int integer = Integer.parseInt(intValue) - 1;
                 if (integer >= 0 && integer < 100 && integer <= numberOfElements) {
                     storage[integer].isDone = true;
@@ -44,6 +48,10 @@ public class Vinbot {
                 }
             } else if (line.toLowerCase().startsWith("unmark")) {
                 String intValue = line.replaceAll("[^0-9]", ""); //remove all non integers
+                if (intValue.isEmpty()) {
+                    System.out.println("Error, invalid task unmarked");
+                    continue;
+                }
                 int integer = Integer.parseInt(intValue) - 1;
                 if (integer >= 0 && integer < 100 && integer <= numberOfElements) {
                     storage[integer].isDone = false;
