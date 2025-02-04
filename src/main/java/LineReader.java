@@ -23,13 +23,7 @@ public class LineReader {
                 break;
 
             case "list":
-                System.out.println(result.spacing() + "Here are the tasks on your list: ^-^");
-                int i = 0;
-                while (storage[i] != null) {
-                    System.out.println(result.spacing() + (i + 1) + ")[" + storage[i].getStatusIcon() + "] " + storage[i].description);
-                    i++;
-                }
-                System.out.println(result.spacing() + result.starLine());
+                listItems(result, storage);
                 break;
 
             default:
@@ -49,7 +43,14 @@ public class LineReader {
                                 storage[integer].description + " [" + storage[integer].getStatusIcon() + "]" +
                                 (mark ? "" : " ;-;"));
                     }
-                } else {
+                }
+                else if (line.toLowerCase().startsWith("todo")) {
+                    Todos todo = new Todos(line);
+                    storage[numberOfElements] = todo;
+                    todo.scan(result, line);
+                    numberOfElements++;
+                }
+                else {
                     storage[numberOfElements] = new Task(line);
                     numberOfElements++;
                     System.out.println(result.spacing() + result.emptyLine());
@@ -59,5 +60,16 @@ public class LineReader {
                 break;
             }
         }
+    }
+
+    private static void listItems(Vinbot.printWelcomeMessage result, Task[] storage) {
+        System.out.println(result.spacing() + "Here are the tasks on your list: ^-^");
+        int i = 0;
+        while (storage[i] != null) {
+            storage[i].print(result, storage, i);
+            i++;
+        }
+        System.out.println(result.spacing() + result.starLine());
+        return;
     }
 }
