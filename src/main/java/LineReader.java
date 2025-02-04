@@ -45,6 +45,7 @@ public class LineReader {
                     }
                 }
                 else if (line.toLowerCase().startsWith("todo")) {
+                    line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
                     Todos todo = new Todos(line);
                     storage[numberOfElements] = todo;
                     todo.scan(result, line);
