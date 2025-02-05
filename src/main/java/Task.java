@@ -13,6 +13,7 @@ public class Task {
     protected String getLabel() {
         return " ";
     }
+
     protected String getDate() {
         return "";
     }
@@ -21,7 +22,7 @@ public class Task {
         return (i + 1) + ")[" + getLabel() + "][" + storage[i].getStatusIcon() + "] " + storage[i].description + getDate();
     }
 
-    public void print(Vinbot.printWelcomeMessage result, Task[] storage, int i) {
-        System.out.println(result.spacing() + toString(storage, i));
+    public void print(Vinbot.printWelcomeMessage format, Task[] storage, int i) {
+        System.out.println(format.spacing() + toString(storage, i));
     }
 }

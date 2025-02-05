@@ -5,11 +5,6 @@ public class Todos extends Task {
     }
 
     @Override
-    public String toString() {
-        return "[T]" + super.toString();
-    }
-
-    @Override
     protected String getLabel() {
         return "T";
     }
@@ -18,9 +13,9 @@ public class Todos extends Task {
         return "";
     }
 
-    public void scan(Vinbot.printWelcomeMessage result, String line) {
-        System.out.println(result.spacing() + result.emptyLine());
-        System.out.println(result.spacing() + "added: " + line);
-        System.out.println(result.spacing() + result.starLine());
+    public void scan(Vinbot.printWelcomeMessage format, String line) {
+        System.out.println(format.spacing() + format.emptyLine());
+        System.out.println(format.spacing() + "added: " + line);
+        System.out.println(format.spacing() + format.starLine());
     }
 }
