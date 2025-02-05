@@ -1,0 +1,9 @@
+help
+task one
+todo two
+deadline three
+Deadline four /by Sunday 3pm
+event five
+Event six /from 20 Jan
+Event seven /from 20 Jan /to 25 Jan
+list

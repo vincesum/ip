@@ -7,16 +7,12 @@ public class LineReader {
         isActive = status;
     }
 
-    public String readLine() {
-        Scanner in = new Scanner(System.in);
-        return in.nextLine();
-    }
-
     public void scanMessage(boolean status, Vinbot.printWelcomeMessage result, Task[] storage) {
         String line;
+        Scanner in = new Scanner(System.in);
         int numberOfElements = 0;
         while (status) {
-            line = readLine();
+            line = in.nextLine();
             switch (line.toLowerCase()) {
             case "bye":
                 status = false;

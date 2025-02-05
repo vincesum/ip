@@ -1,7 +1,39 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
-
+    Hello! I'm Vinbot ^-^
+    What can I do for you?
+    Please enter your current tasks
+    Enter "help" for a list of available commands
+    ----<<<<####****####>>>>----
+    Enter "list" to view your current tasks
+    Enter "mark" followed by a number to mark task as complete
+    To enter a task, enter "todo" followed by your task to store task
+    To enter a deadline, enter "deadline" followed by your task and "/by" due date to store deadline
+    To enter an event, enter "event" followed by your event and "/from" start date "to" end date to store event
+    Enter "unmark" followed by a number to mark task as incomplete
+    ----<<<<####****####>>>>----
+    ----<<<<####****####>>>>----
+    added: task one
+    ****************************
+    ----<<<<####****####>>>>----
+    added: two
+    ****************************
+    ----<<<<####****####>>>>----
+    invalid deadline not added
+    ****************************
+    ----<<<<####****####>>>>----
+    added: four (by: Sunday 3pm)
+    ****************************
+    ----<<<<####****####>>>>----
+    invalid event not added
+    ****************************
+    ----<<<<####****####>>>>----
+    invalid event not added
+    ****************************
+    ----<<<<####****####>>>>----
+    added: seven (from: 20 Jan to: 25 Jan)
+    ****************************
+    Here are the tasks on your list: ^-^
+    1)[ ][ ] task one
+    2)[T][ ] two
+    3)[D][ ] four (by: Sunday 3pm)
+    4)[E][ ] seven (from: 20 Jan to: 25 Jan)
+    ****************************
