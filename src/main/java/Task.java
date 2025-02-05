@@ -13,12 +13,15 @@ public class Task {
     protected String getLabel() {
         return " ";
     }
-
-    public String toString(Vinbot.printWelcomeMessage result, Task storage[], int i) {
-        return (i + 1) + ")[" + getLabel() + "][" + storage[i].getStatusIcon() + "] " + storage[i].description;
+    protected String getDate() {
+        return "";
     }
 
-    public void print(Vinbot.printWelcomeMessage result, Task storage[], int i) {
-        System.out.println(result.spacing() + toString(result, storage, i));
+    public String toString(Task[] storage, int i) {
+        return (i + 1) + ")[" + getLabel() + "][" + storage[i].getStatusIcon() + "] " + storage[i].description + " " + getDate();
+    }
+
+    public void print(Vinbot.printWelcomeMessage result, Task[] storage, int i) {
+        System.out.println(result.spacing() + toString(storage, i));
     }
 }

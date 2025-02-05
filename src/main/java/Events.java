@@ -16,4 +16,7 @@ public class Events extends Task {
     protected String getLabel() {
         return "E";
     }
+    protected String getDate() {
+        return start + " " + end;
+    }
 }

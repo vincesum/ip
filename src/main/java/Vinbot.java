@@ -1,8 +1,3 @@
-import javax.sound.sampled.Line;
-import java.util.Arrays;
-import java.util.Scanner;
-
-
 public class Vinbot {
 
     public static final int MAX_TASKS = 100;
@@ -37,8 +32,7 @@ public class Vinbot {
         System.out.println(spacing + "Enter \"list\" to view your current tasks");
         System.out.println(spacing + "Enter \"mark\" followed by a number to mark task as complete");
         System.out.print(spacing + "Enter \"unmark\" followed by a number to mark task as incomplete\n" + spacing + emptyLine + "\n");
-        printWelcomeMessage result = new printWelcomeMessage(emptyLine, starLine, spacing);
-        return result;
+        return new printWelcomeMessage(emptyLine, starLine, spacing);
     }
 
     public record printWelcomeMessage(String emptyLine, String starLine, String spacing) {

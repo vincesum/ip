@@ -12,7 +12,7 @@ public class LineReader {
         return in.nextLine();
     }
 
-    public void scanMessage(boolean status, Vinbot.printWelcomeMessage result, Task storage[]) {
+    public void scanMessage(boolean status, Vinbot.printWelcomeMessage result, Task[] storage) {
         String line;
         int numberOfElements = 0;
         while (status) {
@@ -46,10 +46,19 @@ public class LineReader {
                 }
                 else if (line.toLowerCase().startsWith("todo")) {
                     line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
-                    Todos todo = new Todos(line);
-                    storage[numberOfElements] = todo;
-                    todo.scan(result, line);
+                    Todos toDo = new Todos(line);
+                    storage[numberOfElements] = toDo;
+                    toDo.scan(result, line);
                     numberOfElements++;
+                }
+                else if (line.toLowerCase().startsWith("deadline")) {
+                    line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
+                    String[] deadLineData = Deadlines.scan(result, line);
+                    if (deadLineData != null) {
+                        Deadlines deadLine = new Deadlines(deadLineData[0], deadLineData[1]);
+                        storage[numberOfElements] = deadLine;
+                        numberOfElements++;
+                    }
                 }
                 else {
                     storage[numberOfElements] = new Task(line);
@@ -71,6 +80,5 @@ public class LineReader {
             i++;
         }
         System.out.println(result.spacing() + result.starLine());
-        return;
     }
 }
