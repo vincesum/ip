@@ -6,7 +6,7 @@ public class Vinbot {
         boolean isActive = true;    //Defines the operation status of the bot
 
         //Initialisation procedure
-        printWelcomeMessage result = getPrintWelcomeMessage();
+        printWelcomeMessage result = getMessage();
 
         //Storage
         Task[] storage = new Task[MAX_TASKS]; //store the tasks
@@ -21,7 +21,7 @@ public class Vinbot {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
-    public static printWelcomeMessage getPrintWelcomeMessage() {
+    public static printWelcomeMessage getMessage() {
         String name = "Vinbot ^-^";
         String emptyLine = "----<<<<####****####>>>>----";
         String starLine = "****************************";
@@ -29,10 +29,19 @@ public class Vinbot {
         System.out.println(spacing + "Hello! I'm " + name);
         System.out.println(spacing + "What can I do for you?");
         System.out.println(spacing + "Please enter your current tasks");
-        System.out.println(spacing + "Enter \"list\" to view your current tasks");
-        System.out.println(spacing + "Enter \"mark\" followed by a number to mark task as complete");
-        System.out.print(spacing + "Enter \"unmark\" followed by a number to mark task as incomplete\n" + spacing + emptyLine + "\n");
+        System.out.println(spacing + "Enter \"help\" for a list of available commands");
+        System.out.print(spacing + emptyLine + "\n");
         return new printWelcomeMessage(emptyLine, starLine, spacing);
+    }
+
+    public static void printHelpMessage(printWelcomeMessage result) {
+        System.out.println(result.spacing() + "Enter \"list\" to view your current tasks");
+        System.out.println(result.spacing() + "Enter \"mark\" followed by a number to mark task as complete");
+        System.out.println(result.spacing() + "To enter a task, enter \"todo\" followed by your task to store task");
+        System.out.println(result.spacing() + "To enter a deadline, enter \"deadline\" followed by your task and \"/by\" due date to store deadline");
+        System.out.println(result.spacing() + "To enter an event, enter \"event\" followed by your event and \"/from\" start date \"to\" end date to store event");
+        System.out.print(result.spacing() + "Enter \"unmark\" followed by a number to mark task as incomplete\n");
+        System.out.print(result.spacing() + result.emptyLine() + "\n");
     }
 
     public record printWelcomeMessage(String emptyLine, String starLine, String spacing) {

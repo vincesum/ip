@@ -26,6 +26,10 @@ public class LineReader {
                 listItems(result, storage);
                 break;
 
+            case "help":
+                Vinbot.printHelpMessage(result);
+                break;
+
             default:
                 if (line.toLowerCase().startsWith("mark") || line.toLowerCase().startsWith("unmark")) {
                     boolean mark = line.toLowerCase().startsWith("mark");
@@ -57,6 +61,15 @@ public class LineReader {
                     if (deadLineData != null) {
                         Deadlines deadLine = new Deadlines(deadLineData[0], deadLineData[1]);
                         storage[numberOfElements] = deadLine;
+                        numberOfElements++;
+                    }
+                }
+                else if (line.toLowerCase().startsWith("event")) {
+                    line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
+                    String[] eventsData = Events.scan(result, line);
+                    if (eventsData != null) {
+                        Events event = new Events(eventsData[0], eventsData[1], eventsData[2]);
+                        storage[numberOfElements] = event;
                         numberOfElements++;
                     }
                 }

@@ -18,7 +18,7 @@ public class Task {
     }
 
     public String toString(Task[] storage, int i) {
-        return (i + 1) + ")[" + getLabel() + "][" + storage[i].getStatusIcon() + "] " + storage[i].description + " " + getDate();
+        return (i + 1) + ")[" + getLabel() + "][" + storage[i].getStatusIcon() + "] " + storage[i].description + getDate();
     }
 
     public void print(Vinbot.printWelcomeMessage result, Task[] storage, int i) {

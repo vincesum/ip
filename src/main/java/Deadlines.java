@@ -26,10 +26,10 @@ public class Deadlines extends Task {
             System.out.println(result.spacing() + result.starLine());
             return null;
         }
-        String desc = line.substring(0 , line.indexOf("/by") - 1);
+        String desc = line.substring(0 , line.indexOf("/by"));
         String date = line.substring(line.indexOf("/by") + 4);
         System.out.println(result.spacing() + result.emptyLine());
-        System.out.println(result.spacing() + "added: " + desc + " (by: " + date + ")");
+        System.out.println(result.spacing() + "added: " + desc + "(by: " + date + ")");
         System.out.println(result.spacing() + result.starLine());
         return new String[]{desc, date};
     }

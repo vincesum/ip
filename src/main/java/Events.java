@@ -17,6 +17,21 @@ public class Events extends Task {
         return "E";
     }
     protected String getDate() {
-        return start + " " + end;
+        return "(from: " + start + " to: " + end +  ")";
+    }
+    public static String[] scan(Vinbot.printWelcomeMessage result, String line) {
+        if (!line.contains("/from") || !line.contains("/to")) { //Remove invalid cases
+            System.out.println(result.spacing() + result.emptyLine());
+            System.out.println(result.spacing() + "invalid event not added");
+            System.out.println(result.spacing() + result.starLine());
+            return null;
+        }
+        String desc = line.substring(0 , line.indexOf("/from"));
+        String start = line.substring(line.indexOf("/from") + 6, line.indexOf("/to") - 1);
+        String end = line.substring(line.indexOf("/to") + 4);
+        System.out.println(result.spacing() + result.emptyLine());
+        System.out.println(result.spacing() + "added: " + desc + "(from: " + start + " to: " + end + ")");
+        System.out.println(result.spacing() + result.starLine());
+        return new String[]{desc, start, end};
     }
 }
