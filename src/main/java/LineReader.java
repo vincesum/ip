@@ -61,7 +61,10 @@ public class LineReader {
         if (!line.contains(" ")) {
             throw new VinException("Darn, your description of a todo is empty. Please enter something -.-");
         }
-        line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
+        line = line.substring(line.indexOf(" ") + 1).trim(); //records from the second word onwards
+        if (line.trim().isEmpty()) {
+            throw new VinException("Darn, your description of a todo is empty. Please enter something -.-");
+        }
         Todos toDo = new Todos(line);
         storage[numberOfElements] = toDo;
         toDo.scan(result, line);
@@ -73,11 +76,10 @@ public class LineReader {
         boolean mark = line.toLowerCase().startsWith("mark");
         String intValue = line.replaceAll("[^0-9]", ""); // remove all non-integers
         int taskIndex = Integer.parseInt(intValue) - 1;
-        if (intValue.isEmpty() || taskIndex > numberOfElements) {
+        if (intValue.isEmpty() || taskIndex > numberOfElements - 1 || taskIndex < 0) {
             throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"));
         }
-
-        if (taskIndex >= 0 && taskIndex < 100 && taskIndex <= numberOfElements) {
+        if (taskIndex >= 0 && taskIndex <= 100) {
             storage[taskIndex].isDone = mark;
             System.out.println((mark ? "Good job on completing " : "Oh, you've unmarked the task ") +
                     storage[taskIndex].description + " [" + storage[taskIndex].getStatusIcon() + "]" +
