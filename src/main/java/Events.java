@@ -18,17 +18,22 @@ public class Events extends Task {
     protected String getDate() {
         return "(from: " + start + " to: " + end +  ")";
     }
-    public static String[] scan(Vinbot.printWelcomeMessage format, String line) {
-        if (!line.contains("/from") || !line.contains("/to")) { //Remove invalid cases
-            System.out.println(format.spacing() + format.emptyLine());
-            System.out.println(format.spacing() + "invalid event not added");
-            System.out.println(format.spacing() + format.starLine());
-            return null;
+    public static String[] scan(Vinbot.printWelcomeMessage format, String line) throws Exception {
+        if (!line.contains("/from") || !line.contains("to")) { //Remove invalid cases
+            throw new VinException(format.spacing() + format.emptyLine() + "\n" + format.spacing() + "invalid event not added >.<\n" + format.spacing() + format.starLine() + "\n");
         }
-
         String desc = line.substring(0, line.indexOf("/from"));
-        String start = line.substring(line.indexOf("/from") + 6, line.indexOf("/to") - 1);
-        String end = line.substring(line.indexOf("/to") + 4);
+        if (desc.trim().isEmpty()) {
+            throw new VinException(format.spacing() + format.emptyLine() + "\n" + format.spacing() + "Description of event not found!! 0.o Please enter a start date after /from\n" + format.spacing() + format.starLine() + "\n");
+        }
+        String start = line.substring(line.indexOf("/from") + 5, line.indexOf("/to") - 1).trim();
+        if (start.trim().isEmpty()) {
+            throw new VinException(format.spacing() + format.emptyLine() + "\n" + format.spacing() + "Start date of event not found!! 0.o Please enter a start date after /from\n" + format.spacing() + format.starLine() + "\n");
+        }
+        String end = line.substring(line.indexOf("/to") + 3).trim();
+        if (end.trim().isEmpty()) {
+            throw new VinException(format.spacing() + format.emptyLine() + "\n" + format.spacing() + "End date of event not found!! 0.o Please enter an end date after /to\n" + format.spacing() + format.starLine() + "\n");
+        }
         System.out.println(format.spacing() + format.emptyLine());
         System.out.println(format.spacing() + "added: " + desc + "(from: " + start + " to: " + end + ")");
         System.out.println(format.spacing() + format.starLine());
