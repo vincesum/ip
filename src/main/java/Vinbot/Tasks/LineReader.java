@@ -69,11 +69,11 @@ public class LineReader {
 
     private static int handleTodoMessage(Vinbot.printWelcomeMessage result, Task[] storage, String line, int numberOfElements) throws VinException {
         if (!line.contains(" ")) {
-            throw new VinException("Darn, your description of a todo is empty. Please enter something -.-");
+            throw new VinException("    Darn, your description of a todo is empty. Please enter something -.-");
         }
         line = line.substring(line.indexOf(" ") + 1).trim(); //records from the second word onwards
         if (line.trim().isEmpty()) {
-            throw new VinException("Darn, your description of a todo is empty. Please enter something -.-");
+            throw new VinException("    Darn, your description of a todo is empty. Please enter something -.-");
         }
         Todos toDo = new Todos(line);
         storage[numberOfElements] = toDo;
@@ -86,15 +86,15 @@ public class LineReader {
         boolean mark = line.toLowerCase().startsWith("mark");
         String intValue = line.replaceAll("[^0-9]", ""); // remove all non-integers
         if (intValue.isEmpty()) {
-            throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"));
+            throw new VinException("    Error, invalid task " + (mark ? "marked" : "unmarked"));
         }
         int taskIndex = Integer.parseInt(intValue) - 1;
         if (taskIndex > numberOfElements - 1 || taskIndex < 0) {
-            throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"));
+            throw new VinException("    Error, invalid task " + (mark ? "marked" : "unmarked"));
         }
         if (taskIndex >= 0 && taskIndex <= 100) {
             storage[taskIndex].setDone(mark);
-            System.out.println((mark ? "Good job on completing " : "Oh, you've unmarked the task ") +
+            System.out.println((mark ? "    Good job on completing " : "    Oh, you've unmarked the task ") +
                     storage[taskIndex].getDescription() + " [" + storage[taskIndex].getStatusIcon() + "]" +
                     (mark ? "" : " ;-;"));
         }
@@ -138,7 +138,7 @@ public class LineReader {
             }
             break;
         default:
-            System.out.println("Hey! Sorry but I don't know what you've entered. GG.com");
+            System.out.println("    Hey! Sorry but I don't know what you've entered. GG.com");
             break;
         }
 
