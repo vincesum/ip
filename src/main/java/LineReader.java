@@ -35,15 +35,6 @@ public class LineReader {
         }
     }
 
-    private static int handleTaskMessage(Vinbot.printWelcomeMessage result, Task[] storage, String line, int numberOfElements) {
-        storage[numberOfElements] = new Task(line);
-        numberOfElements++;
-        System.out.println(result.spacing() + result.emptyLine());
-        System.out.println(result.spacing() + "added: " + line);
-        System.out.println(result.spacing() + result.starLine());
-        return numberOfElements;
-    }
-
     private static int handleEventMessage(Vinbot.printWelcomeMessage result, Task[] storage, String line, int numberOfElements) {
         line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
         String[] eventsData = Events.scan(result, line);
@@ -66,7 +57,10 @@ public class LineReader {
         return numberOfElements;
     }
 
-    private static int handleTodoMessage(Vinbot.printWelcomeMessage result, Task[] storage, String line, int numberOfElements) {
+    private static int handleTodoMessage(Vinbot.printWelcomeMessage result, Task[] storage, String line, int numberOfElements) throws VinException {
+        if (!line.contains(" ")) {
+            throw new VinException("Darn, your description of a todo is empty. Please enter something -.-");
+        }
         line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
         Todos toDo = new Todos(line);
         storage[numberOfElements] = toDo;
@@ -75,16 +69,14 @@ public class LineReader {
         return numberOfElements;
     }
 
-    private static void handleMarkMessage(Task[] storage, String line, int numberOfElements) {
+    private static void handleMarkMessage(Task[] storage, String line, int numberOfElements) throws VinException {
         boolean mark = line.toLowerCase().startsWith("mark");
         String intValue = line.replaceAll("[^0-9]", ""); // remove all non-integers
-
-        if (intValue.isEmpty()) {
-            System.out.println("Error, invalid task " + (mark ? "marked" : "unmarked"));
-            return;
+        int taskIndex = Integer.parseInt(intValue) - 1;
+        if (intValue.isEmpty() || taskIndex > numberOfElements) {
+            throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"));
         }
 
-        int taskIndex = Integer.parseInt(intValue) - 1;
         if (taskIndex >= 0 && taskIndex < 100 && taskIndex <= numberOfElements) {
             storage[taskIndex].isDone = mark;
             System.out.println((mark ? "Good job on completing " : "Oh, you've unmarked the task ") +
@@ -94,21 +86,37 @@ public class LineReader {
     }
 
     private int handleMessage(Vinbot.printWelcomeMessage format, Task[] storage, String line, int numberOfElements) {
-        if (line.toLowerCase().startsWith("mark") || line.toLowerCase().startsWith("unmark")) {
-            handleMarkMessage(storage, line, numberOfElements);
-        }
-        else if (line.toLowerCase().startsWith("todo")) {
-            numberOfElements = handleTodoMessage(format, storage, line, numberOfElements);
-        }
-        else if (line.toLowerCase().startsWith("deadline")) {
+        String command = line.split(" ")[0].toLowerCase(); // Extract the first word
+
+        switch (command) {
+        case "mark":
+        case "unmark":
+            try {
+                handleMarkMessage(storage, line, numberOfElements);
+            }
+            catch (VinException e) {
+                System.out.println(e.getMessage());
+            }
+            break;
+        case "todo":
+            try {
+                numberOfElements = handleTodoMessage(format, storage, line, numberOfElements);
+            }
+            catch (VinException e) {
+                System.out.println(e.getMessage());
+            }
+            break;
+        case "deadline":
             numberOfElements = handleDeadLineMessage(format, storage, line, numberOfElements);
-        }
-        else if (line.toLowerCase().startsWith("event")) {
+            break;
+        case "event":
             numberOfElements = handleEventMessage(format, storage, line, numberOfElements);
+            break;
+        default:
+            System.out.println("Hey! Sorry but I don't know what you've entered. GG.com");
+            break;
         }
-        else {
-            numberOfElements = handleTaskMessage(format, storage, line, numberOfElements);
-        }
+
         return numberOfElements;
     }
 
