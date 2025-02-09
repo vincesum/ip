@@ -1,3 +1,8 @@
+package Vinbot;
+
+import Vinbot.Tasks.LineReader;
+import Vinbot.Tasks.Task;
+
 public class Vinbot {
 
     public static final int MAX_TASKS = 100;
