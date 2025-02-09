@@ -26,7 +26,7 @@ public class Events extends Task {
             return null;
         }
 
-        String desc = line.substring(0 , line.indexOf("/from"));
+        String desc = line.substring(0, line.indexOf("/from"));
         String start = line.substring(line.indexOf("/from") + 6, line.indexOf("/to") - 1);
         String end = line.substring(line.indexOf("/to") + 4);
         System.out.println(format.spacing() + format.emptyLine());

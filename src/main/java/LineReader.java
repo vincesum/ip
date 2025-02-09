@@ -2,20 +2,22 @@ import java.util.Scanner;
 
 public class LineReader {
     public boolean isActive;
+    public static final Scanner in = new Scanner(System.in);
 
     public LineReader(boolean status) {
         isActive = status;
     }
-
-    public void scanMessage(boolean status, Vinbot.printWelcomeMessage format, Task[] storage) {
-        String line;
-        Scanner in = new Scanner(System.in);
+    public void scanMessage(boolean isRunning, Vinbot.printWelcomeMessage format, Task[] storage) {
         int numberOfElements = 0;
-        while (status) {
+        String line = "";
+        while (isRunning) {
+            if (!in.hasNextLine()) {  // Prevent NoSuchElementException
+                break;
+            }
             line = in.nextLine();
             switch (line.toLowerCase()) {
             case "bye":
-                status = false;
+                isRunning = false;
                 break;
 
             case "list":
@@ -82,11 +84,11 @@ public class LineReader {
             return;
         }
 
-        int integer = Integer.parseInt(intValue) - 1;
-        if (integer >= 0 && integer < 100 && integer <= numberOfElements) {
-            storage[integer].isDone = mark;
+        int taskIndex = Integer.parseInt(intValue) - 1;
+        if (taskIndex >= 0 && taskIndex < 100 && taskIndex <= numberOfElements) {
+            storage[taskIndex].isDone = mark;
             System.out.println((mark ? "Good job on completing " : "Oh, you've unmarked the task ") +
-                    storage[integer].description + " [" + storage[integer].getStatusIcon() + "]" +
+                    storage[taskIndex].description + " [" + storage[taskIndex].getStatusIcon() + "]" +
                     (mark ? "" : " ;-;"));
         }
     }

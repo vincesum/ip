@@ -38,7 +38,7 @@ public class Vinbot {
         System.out.println(format.spacing() + "Enter \"mark\" followed by a number to mark task as complete");
         System.out.println(format.spacing() + "To enter a task, enter \"todo\" followed by your task to store task");
         System.out.println(format.spacing() + "To enter a deadline, enter \"deadline\" followed by your task and \"/by\" due date to store deadline");
-        System.out.println(format.spacing() + "To enter an event, enter \"event\" followed by your event and \"/from\" start date \"to\" end date to store event");
+        System.out.println(format.spacing() + "To enter an event, enter \"event\" followed by your event and \"/from\" start date \"/to\" end date to store event");
         System.out.print(format.spacing() + "Enter \"unmark\" followed by a number to mark task as incomplete\n");
         System.out.print(format.spacing() + format.emptyLine() + "\n");
     }
