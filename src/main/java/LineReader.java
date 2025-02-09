@@ -35,24 +35,30 @@ public class LineReader {
         }
     }
 
-    private static int handleEventMessage(Vinbot.printWelcomeMessage result, Task[] storage, String line, int numberOfElements) {
+    private static int handleEventMessage(Vinbot.printWelcomeMessage result, Task[] storage, String line, int numberOfElements) throws VinException{
         line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
-        String[] eventsData = Events.scan(result, line);
-        if (eventsData != null) {
+        try {
+            String[] eventsData = Events.scan(result, line);
             Events event = new Events(eventsData[0], eventsData[1], eventsData[2]);
             storage[numberOfElements] = event;
             numberOfElements++;
         }
+        catch (Exception e) {
+            throw new VinException(e.getMessage());
+        }
         return numberOfElements;
     }
 
-    private static int handleDeadLineMessage(Vinbot.printWelcomeMessage result, Task[] storage, String line, int numberOfElements) {
+    private static int handleDeadLineMessage(Vinbot.printWelcomeMessage result, Task[] storage, String line, int numberOfElements) throws VinException {
         line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
-        String[] deadLineData = Deadlines.scan(result, line);
-        if (deadLineData != null) {
+        try {
+            String[] deadLineData = Deadlines.scan(result, line);
             Deadlines deadLine = new Deadlines(deadLineData[0], deadLineData[1]);
             storage[numberOfElements] = deadLine;
             numberOfElements++;
+        }
+        catch (Exception e) {
+            throw new VinException(e.getMessage());
         }
         return numberOfElements;
     }
@@ -75,8 +81,11 @@ public class LineReader {
     private static void handleMarkMessage(Task[] storage, String line, int numberOfElements) throws VinException {
         boolean mark = line.toLowerCase().startsWith("mark");
         String intValue = line.replaceAll("[^0-9]", ""); // remove all non-integers
+        if (intValue.isEmpty()) {
+            throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"));
+        }
         int taskIndex = Integer.parseInt(intValue) - 1;
-        if (intValue.isEmpty() || taskIndex > numberOfElements - 1 || taskIndex < 0) {
+        if (taskIndex > numberOfElements - 1 || taskIndex < 0) {
             throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"));
         }
         if (taskIndex >= 0 && taskIndex <= 100) {
@@ -109,10 +118,20 @@ public class LineReader {
             }
             break;
         case "deadline":
-            numberOfElements = handleDeadLineMessage(format, storage, line, numberOfElements);
+            try {
+                numberOfElements = handleDeadLineMessage(format, storage, line, numberOfElements);
+            }
+            catch (VinException e) {
+                System.out.println(e.getMessage());
+            }
             break;
         case "event":
-            numberOfElements = handleEventMessage(format, storage, line, numberOfElements);
+            try {
+                numberOfElements = handleEventMessage(format, storage, line, numberOfElements);
+            }
+            catch (VinException e) {
+                System.out.println(e.getMessage());
+            }
             break;
         default:
             System.out.println("Hey! Sorry but I don't know what you've entered. GG.com");
