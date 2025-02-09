@@ -1,3 +1,7 @@
+package Vinbot.Tasks;
+
+import Vinbot.Vinbot;
+
 public class Events extends Task {
     private String start;
     private String end;

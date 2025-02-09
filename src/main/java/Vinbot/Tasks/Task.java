@@ -1,3 +1,7 @@
+package Vinbot.Tasks;
+
+import Vinbot.Vinbot;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -24,5 +28,21 @@ public class Task {
 
     public void print(Vinbot.printWelcomeMessage format, Task[] storage, int i) {
         System.out.println(format.spacing() + toString(storage, i));
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
     }
 }

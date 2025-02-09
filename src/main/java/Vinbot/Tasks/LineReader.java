@@ -1,3 +1,7 @@
+package Vinbot.Tasks;
+
+import Vinbot.Vinbot;
+
 import java.util.Scanner;
 
 public class LineReader {
@@ -35,7 +39,7 @@ public class LineReader {
         }
     }
 
-    private static int handleEventMessage(Vinbot.printWelcomeMessage result, Task[] storage, String line, int numberOfElements) throws VinException{
+    private static int handleEventMessage(Vinbot.printWelcomeMessage result, Task[] storage, String line, int numberOfElements) throws VinException {
         line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
         try {
             String[] eventsData = Events.scan(result, line);
@@ -89,9 +93,9 @@ public class LineReader {
             throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"));
         }
         if (taskIndex >= 0 && taskIndex <= 100) {
-            storage[taskIndex].isDone = mark;
+            storage[taskIndex].setDone(mark);
             System.out.println((mark ? "Good job on completing " : "Oh, you've unmarked the task ") +
-                    storage[taskIndex].description + " [" + storage[taskIndex].getStatusIcon() + "]" +
+                    storage[taskIndex].getDescription() + " [" + storage[taskIndex].getStatusIcon() + "]" +
                     (mark ? "" : " ;-;"));
         }
     }

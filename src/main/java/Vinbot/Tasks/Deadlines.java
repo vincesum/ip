@@ -1,3 +1,7 @@
+package Vinbot.Tasks;
+
+import Vinbot.Vinbot;
+
 public class Deadlines extends Task {
     private String by;
     public Deadlines(String description, String date) {
