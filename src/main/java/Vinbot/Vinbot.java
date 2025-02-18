@@ -3,6 +3,8 @@ package Vinbot;
 import Vinbot.Tasks.LineReader;
 import Vinbot.Tasks.Task;
 
+import java.util.ArrayList;
+
 public class Vinbot {
 
     public static final int MAX_TASKS = 100;
@@ -13,7 +15,8 @@ public class Vinbot {
         printWelcomeMessage format = getMessage();
 
         //Storage
-        Task[] storage = new Task[MAX_TASKS]; //store the tasks
+        ArrayList<Task> storage = new ArrayList<Task>();
+        //Task[] storage = new Task[MAX_TASKS]; //store the tasks
 
         //Record user Input
         LineReader read = new LineReader(true);
