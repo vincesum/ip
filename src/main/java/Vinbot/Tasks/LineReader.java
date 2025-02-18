@@ -12,6 +12,7 @@ public class LineReader {
     public LineReader(boolean status) {
         isActive = status;
     }
+
     public void scanMessage(boolean isRunning, Vinbot.printWelcomeMessage format, ArrayList<Task> storage) {
         int numberOfElements = 0;
         String line = "";
@@ -47,8 +48,7 @@ public class LineReader {
             Events event = new Events(eventsData[0], eventsData[1], eventsData[2]);
             storage.add(numberOfElements, event);
             numberOfElements++;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new VinException(e.getMessage());
         }
         return numberOfElements;
@@ -61,8 +61,7 @@ public class LineReader {
             Deadlines deadLine = new Deadlines(deadLineData[0], deadLineData[1]);
             storage.add(numberOfElements, deadLine);
             numberOfElements++;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new VinException(e.getMessage());
         }
         return numberOfElements;
@@ -93,12 +92,23 @@ public class LineReader {
         if (taskIndex > numberOfElements - 1 || taskIndex < 0) {
             throw new VinException("    Error, invalid task " + (mark ? "marked" : "unmarked"));
         }
-        if (taskIndex >= 0 && taskIndex <= 100) {
-            storage.get(taskIndex).setDone(mark);
-            System.out.println((mark ? "    Good job on completing " : "    Oh, you've unmarked the task ") +
-                    storage.get(taskIndex).getDescription() + " [" + storage.get(taskIndex).getStatusIcon() + "]" +
-                    (mark ? "" : " ;-;"));
+        storage.get(taskIndex).setDone(mark);
+        System.out.println((mark ? "    Good job on completing " : "    Oh, you've unmarked the task ") +
+                storage.get(taskIndex).getDescription() + " [" + storage.get(taskIndex).getStatusIcon() + "]" +
+                (mark ? "" : " ;-;"));
+    }
+
+    private static void handleDeleteMessage(ArrayList<Task> storage, String line, int numberOfElements) throws VinException {
+        String intValue = line.replaceAll("[^0-9]", "");
+        if (intValue.isEmpty()) {
+            throw new VinException("    Error, no tasks were deleted");
         }
+        int taskIndex = Integer.parseInt(intValue) - 1;
+        if (taskIndex > numberOfElements - 1 || taskIndex < 0) {
+            throw new VinException("    Error, task index to delete is out of bounds ");
+        }
+        System.out.println(("    Successfully deleted " + storage.get(taskIndex).getDescription() + " [" + storage.get(taskIndex).getStatusIcon() + "]"));
+        storage.remove(taskIndex);
     }
 
     private int handleMessage(Vinbot.printWelcomeMessage format, ArrayList<Task> storage, String line, int numberOfElements) {
@@ -109,32 +119,36 @@ public class LineReader {
         case "unmark":
             try {
                 handleMarkMessage(storage, line, numberOfElements);
-            }
-            catch (VinException e) {
+            } catch (VinException e) {
                 System.out.println(e.getMessage());
             }
             break;
         case "todo":
             try {
                 numberOfElements = handleTodoMessage(format, storage, line, numberOfElements);
-            }
-            catch (VinException e) {
+            } catch (VinException e) {
                 System.out.println(e.getMessage());
             }
             break;
         case "deadline":
             try {
                 numberOfElements = handleDeadLineMessage(format, storage, line, numberOfElements);
-            }
-            catch (VinException e) {
+            } catch (VinException e) {
                 System.out.println(e.getMessage());
             }
             break;
         case "event":
             try {
                 numberOfElements = handleEventMessage(format, storage, line, numberOfElements);
+            } catch (VinException e) {
+                System.out.println(e.getMessage());
             }
-            catch (VinException e) {
+            break;
+        case "delete":
+            try {
+                handleDeleteMessage(storage, line, numberOfElements);
+                numberOfElements--;
+            } catch (VinException e) {
                 System.out.println(e.getMessage());
             }
             break;
