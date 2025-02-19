@@ -3,14 +3,22 @@ package Vinbot;
 import Vinbot.Tasks.Task;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 public class FileEditor {
     public Path filePath = Paths.get("data", "Vinbot.txt");
     public boolean fileExists = java.nio.file.Files.exists(filePath);
+
+    public Scanner readFile() throws FileNotFoundException {
+        File file = new File("data/Vinbot.txt");
+        Scanner in = new Scanner(file);
+        return in;
+    }
 
     public void makeFile() {
         if (!fileExists) {
@@ -44,6 +52,9 @@ public class FileEditor {
             case "E":
                 text.append("event ").append(storage[i].getDescription()).append("/from ").append(storage[i].getStart()).append(" /to ").append(storage[i].getEnd()).append("\n");
                 break;
+            }
+            if (storage[i].getStatusIcon().equals("X")) {
+                text.append("mark ").append(i + 1).append("\n");
             }
             i++;
         }

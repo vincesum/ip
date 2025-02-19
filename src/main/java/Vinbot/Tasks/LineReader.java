@@ -8,13 +8,11 @@ import Vinbot.FileEditor;
 
 public class LineReader {
     public boolean isActive;
-    public static final Scanner in = new Scanner(System.in);
 
     public LineReader(boolean status) {
         isActive = status;
     }
-    public void scanMessage(boolean isRunning, Vinbot.printWelcomeMessage format, Task[] storage) {
-        int numberOfElements = 0;
+    public int scanMessage(boolean isRunning, Vinbot.printWelcomeMessage format, Task[] storage,int numberOfElements, Scanner in) {
         String line = "";
         while (isRunning) {
             if (!in.hasNextLine()) {  // Prevent NoSuchElementException
@@ -39,6 +37,7 @@ public class LineReader {
                 break;
             }
         }
+        return numberOfElements;
     }
 
     private static int handleEventMessage(Vinbot.printWelcomeMessage result, Task[] storage, String line, int numberOfElements) throws VinException {
