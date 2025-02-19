@@ -12,14 +12,23 @@ public class Events extends Task {
     }
 
     @Override
+    public String getStart() {
+        return start;
+    }
+    @Override
+    public String getEnd() {
+        return end;
+    }
+
+    @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + start + " to: " + end + ")";
     }
     @Override
-    protected String getLabel() {
+    public String getLabel() {
         return "E";
     }
-    protected String getDate() {
+    public String getDate() {
         return "(from: " + start + " to: " + end +  ")";
     }
     public static String[] scan(Vinbot.printWelcomeMessage format, String line) throws Exception {

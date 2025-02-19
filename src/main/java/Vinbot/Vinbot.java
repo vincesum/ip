@@ -3,6 +3,7 @@ package Vinbot;
 import Vinbot.Tasks.LineReader;
 import Vinbot.Tasks.Task;
 
+
 public class Vinbot {
 
     public static final int MAX_TASKS = 100;
@@ -14,6 +15,10 @@ public class Vinbot {
 
         //Storage
         Task[] storage = new Task[MAX_TASKS]; //store the tasks
+
+        //Generate data directory and make Vinbot.txt file
+        FileEditor file = new FileEditor();
+        file.makeFile();
 
         //Record user Input
         LineReader read = new LineReader(true);

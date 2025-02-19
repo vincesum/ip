@@ -2,7 +2,9 @@ package Vinbot.Tasks;
 
 import Vinbot.Vinbot;
 
+import java.io.IOException;
 import java.util.Scanner;
+import Vinbot.FileEditor;
 
 public class LineReader {
     public boolean isActive;
@@ -102,7 +104,7 @@ public class LineReader {
 
     private int handleMessage(Vinbot.printWelcomeMessage format, Task[] storage, String line, int numberOfElements) {
         String command = line.split(" ")[0].toLowerCase(); // Extract the first word
-
+        FileEditor fileHandler = new FileEditor();
         switch (command) {
         case "mark":
         case "unmark":
@@ -141,7 +143,12 @@ public class LineReader {
             System.out.println("    Hey! Sorry but I don't know what you've entered. GG.com");
             break;
         }
-
+        try {
+            fileHandler.writeToFile(storage);
+        }
+        catch (IOException e){
+            System.out.println("Something went wrong with writing to Vinbot.txt: " + e.getMessage());
+        }
         return numberOfElements;
     }
 

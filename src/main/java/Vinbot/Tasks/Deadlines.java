@@ -10,11 +10,15 @@ public class Deadlines extends Task {
     }
 
     @Override
-    protected String getLabel() {
+    public String getLabel() {
         return "D";
     }
 
-    protected String getDate() {
+    public String getBy() {
+        return by;
+    }
+
+    public String getDate() {
         return "(by: " + by + ")";
     }
 
