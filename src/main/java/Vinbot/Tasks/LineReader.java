@@ -3,19 +3,19 @@ package Vinbot.Tasks;
 import Vinbot.Vinbot;
 
 import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Scanner;
+import Vinbot.FileEditor;
 
 public class LineReader {
     public boolean isActive;
-    public static final Scanner in = new Scanner(System.in);
 
     public LineReader(boolean status) {
         isActive = status;
     }
 
-    public void scanMessage(boolean isRunning, Vinbot.printWelcomeMessage format, ArrayList<Task> storage) {
-        int numberOfElements = 0;
-        String line = "";
+    public int scanMessage(boolean isRunning, Vinbot.printWelcomeMessage format, ArrayList<Task> storage,int numberOfElements, Scanner in) {
+        String line;
         while (isRunning) {
             if (!in.hasNextLine()) {  // Prevent NoSuchElementException
                 break;
@@ -39,6 +39,7 @@ public class LineReader {
                 break;
             }
         }
+        return numberOfElements;
     }
 
     private static int handleEventMessage(Vinbot.printWelcomeMessage result, ArrayList<Task> storage, String line, int numberOfElements) throws VinException {
@@ -113,7 +114,7 @@ public class LineReader {
 
     private int handleMessage(Vinbot.printWelcomeMessage format, ArrayList<Task> storage, String line, int numberOfElements) {
         String command = line.split(" ")[0].toLowerCase(); // Extract the first word
-
+        FileEditor fileHandler = new FileEditor();
         switch (command) {
         case "mark":
         case "unmark":
@@ -156,7 +157,12 @@ public class LineReader {
             System.out.println("    Hey! Sorry but I don't know what you've entered. GG.com");
             break;
         }
-
+        try {
+            fileHandler.writeToFile(storage);
+        }
+        catch (IOException e){
+            System.out.println("Something went wrong with writing to Vinbot.txt: " + e.getMessage());
+        }
         return numberOfElements;
     }
 

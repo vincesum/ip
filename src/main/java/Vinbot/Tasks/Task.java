@@ -17,11 +17,21 @@ public class Task {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
-    protected String getLabel() {
+    public String getLabel() {
         return " ";
     }
 
-    protected String getDate() {
+    public String getDate() {
+        return "";
+    }
+
+    public String getBy() {
+        return "";
+    }
+    public String getStart() {
+        return "";
+    }
+    public String getEnd() {
         return "";
     }
 

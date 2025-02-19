@@ -9,11 +9,11 @@ public class Todos extends Task {
     }
 
     @Override
-    protected String getLabel() {
+    public String getLabel() {
         return "T";
     }
 
-    protected String getDate() {
+    public String getDate() {
         return "";
     }
 
