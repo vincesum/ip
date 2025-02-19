@@ -2,6 +2,9 @@ package Vinbot.Tasks;
 
 import Vinbot.Vinbot;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -22,11 +25,11 @@ public class Task {
         return "";
     }
 
-    public String toString(Task[] storage, int i) {
-        return (i + 1) + ")[" + getLabel() + "][" + storage[i].getStatusIcon() + "] " + storage[i].description + getDate();
+    public String toString(ArrayList<Task> storage, int i) {
+        return (i + 1) + ")[" + getLabel() + "][" + storage.get(i).getStatusIcon() + "] " + storage.get(i).description + getDate();
     }
 
-    public void print(Vinbot.printWelcomeMessage format, Task[] storage, int i) {
+    public void print(Vinbot.printWelcomeMessage format, ArrayList<Task> storage, int i) {
         System.out.println(format.spacing() + toString(storage, i));
     }
 
