@@ -2,9 +2,9 @@ package Vinbot.Tasks;
 
 import Vinbot.Vinbot;
 
-public class Todos extends Task {
+public class Todo extends Task {
     protected static final String label = "T";
-    public Todos(String description) {
+    public Todo(String description) {
         super(description);
     }
 

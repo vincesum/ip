@@ -45,12 +45,12 @@ public class LineReader {
     private static int handleEventMessage(Vinbot.printWelcomeMessage result, ArrayList<Task> storage, String line, int numberOfElements) throws VinException {
         line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
         try {
-            String[] eventsData = Events.scan(result, line);
-            Events event = new Events(eventsData[0], eventsData[1], eventsData[2]);
+            String[] eventsData = Event.scan(result, line);
+            Event event = new Event(eventsData[0], eventsData[1], eventsData[2]);
             storage.add(numberOfElements, event);
             numberOfElements++;
         } catch (Exception e) {
-            throw new VinException(e.getMessage());
+            System.out.println(e.getMessage());
         }
         return numberOfElements;
     }
@@ -58,40 +58,40 @@ public class LineReader {
     private static int handleDeadLineMessage(Vinbot.printWelcomeMessage result, ArrayList<Task> storage, String line, int numberOfElements) throws VinException {
         line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
         try {
-            String[] deadLineData = Deadlines.scan(result, line);
-            Deadlines deadLine = new Deadlines(deadLineData[0], deadLineData[1]);
+            String[] deadLineData = Deadline.scan(result, line);
+            Deadline deadLine = new Deadline(deadLineData[0], deadLineData[1]);
             storage.add(numberOfElements, deadLine);
             numberOfElements++;
         } catch (Exception e) {
-            throw new VinException(e.getMessage());
+            System.out.println(e.getMessage());
         }
         return numberOfElements;
     }
 
     private static int handleTodoMessage(Vinbot.printWelcomeMessage result, ArrayList<Task> storage, String line, int numberOfElements) throws VinException {
         if (!line.contains(" ")) {
-            throw new VinException("    Darn, your description of a todo is empty. Please enter something -.-");
+            throw new VinException("Darn, your description of a todo is empty. Please enter something -.-", result);
         }
         line = line.substring(line.indexOf(" ") + 1).trim(); //records from the second word onwards
         if (line.trim().isEmpty()) {
-            throw new VinException("    Darn, your description of a todo is empty. Please enter something -.-");
+            throw new VinException("Darn, your description of a todo is empty. Please enter something -.-", result);
         }
-        Todos toDo = new Todos(line);
+        Todo toDo = new Todo(line);
         storage.add(numberOfElements, toDo);
         toDo.scan(result, line);
         numberOfElements++;
         return numberOfElements;
     }
 
-    private static void handleMarkMessage(ArrayList<Task> storage, String line, int numberOfElements) throws VinException {
+    private static void handleMarkMessage(ArrayList<Task> storage, String line, int numberOfElements, Vinbot.printWelcomeMessage format) throws VinException {
         boolean mark = line.toLowerCase().startsWith("mark");
         String intValue = line.replaceAll("[^0-9]", ""); // remove all non-integers
         if (intValue.isEmpty()) {
-            throw new VinException("    Error, invalid task " + (mark ? "marked" : "unmarked"));
+            throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"), format);
         }
         int taskIndex = Integer.parseInt(intValue) - 1;
         if (taskIndex > numberOfElements - 1 || taskIndex < 0) {
-            throw new VinException("    Error, invalid task " + (mark ? "marked" : "unmarked"));
+            throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"), format);
         }
         storage.get(taskIndex).setDone(mark);
         System.out.println((mark ? "    Good job on completing " : "    Oh, you've unmarked the task ") +
@@ -99,14 +99,14 @@ public class LineReader {
                 (mark ? "" : " ;-;"));
     }
 
-    private static void handleDeleteMessage(ArrayList<Task> storage, String line, int numberOfElements) throws VinException {
+    private static void handleDeleteMessage(ArrayList<Task> storage, String line, int numberOfElements, Vinbot.printWelcomeMessage format) throws VinException {
         String intValue = line.replaceAll("[^0-9]", "");
         if (intValue.isEmpty()) {
-            throw new VinException("    Error, no tasks were deleted");
+            throw new VinException("Error, no tasks were deleted", format);
         }
         int taskIndex = Integer.parseInt(intValue) - 1;
         if (taskIndex > numberOfElements - 1 || taskIndex < 0) {
-            throw new VinException("    Error, task index to delete is out of bounds ");
+            throw new VinException("Error, task index to delete is out of bounds ", format);
         }
         System.out.println(("    Successfully deleted " + storage.get(taskIndex).getDescription() + " [" + storage.get(taskIndex).getStatusIcon() + "]"));
         storage.remove(taskIndex);
@@ -119,7 +119,7 @@ public class LineReader {
         case "mark":
         case "unmark":
             try {
-                handleMarkMessage(storage, line, numberOfElements);
+                handleMarkMessage(storage, line, numberOfElements, format);
             } catch (VinException e) {
                 System.out.println(e.getMessage());
             }
@@ -147,14 +147,19 @@ public class LineReader {
             break;
         case "delete":
             try {
-                handleDeleteMessage(storage, line, numberOfElements);
+                handleDeleteMessage(storage, line, numberOfElements, format);
                 numberOfElements--;
             } catch (VinException e) {
                 System.out.println(e.getMessage());
             }
             break;
         default:
-            System.out.println("    Hey! Sorry but I don't know what you've entered. GG.com");
+            try {
+                throw new VinException("Hey! Sorry but I don't know what you've entered. GG.com", format);
+            }
+            catch (VinException e) {
+                System.out.println(e.getMessage());
+            }
             break;
         }
         try {

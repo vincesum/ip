@@ -17,8 +17,7 @@ public class FileEditor {
 
     public Scanner readFile() throws FileNotFoundException {
         File file = new File("data/Vinbot.txt");
-        Scanner in = new Scanner(file);
-        return in;
+        return new Scanner(file);
     }
 
     public void makeFile() {
