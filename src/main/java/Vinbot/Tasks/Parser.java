@@ -1,7 +1,7 @@
 package Vinbot.Tasks;
 
-import Vinbot.Vinbot;
 import Vinbot.MessageFormat;
+import Vinbot.VinException;
 
 import java.util.ArrayList;
 import java.io.IOException;

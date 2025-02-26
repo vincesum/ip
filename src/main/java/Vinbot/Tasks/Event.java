@@ -1,7 +1,7 @@
 package Vinbot.Tasks;
 
-import Vinbot.Vinbot;
 import Vinbot.MessageFormat;
+import Vinbot.VinException;
 
 public class Event extends Task {
     private String start;

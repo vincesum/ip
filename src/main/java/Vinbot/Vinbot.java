@@ -2,6 +2,7 @@ package Vinbot;
 
 import Vinbot.Tasks.Parser;
 import Vinbot.Tasks.Task;
+import Vinbot.Tasks.TaskList;
 
 import java.util.ArrayList;
 import java.io.FileNotFoundException;
@@ -22,6 +23,7 @@ public class Vinbot {
         format.printWelcomeMessage();
 
         //Storage
+        TaskList tasklist = new TaskList();
         ArrayList<Task> storage = new ArrayList<>();
 
         //Generate data directory and make Vinbot.txt file

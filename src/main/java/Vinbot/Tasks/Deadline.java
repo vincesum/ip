@@ -1,7 +1,8 @@
 package Vinbot.Tasks;
 
-import Vinbot.Vinbot;
 import Vinbot.MessageFormat;
+import Vinbot.VinException;
+
 public class Deadline extends Task {
     private String by;
     private static final String SPLITTER = "/by";

@@ -14,10 +14,6 @@ public class Todo extends Task {
         return "T";
     }
 
-    public String getDate() {
-        return "";
-    }
-
     public void scan(MessageFormat format, String line) {
         System.out.println(format.getSpacing() + format.getEmptyLine());
         System.out.println(format.getSpacing() + "added: " + line);
