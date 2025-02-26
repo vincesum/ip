@@ -25,21 +25,21 @@ public class Deadline extends Task {
         return "(by: " + by + ")";
     }
 
-    public static String[] scan(MessageFormat format, String line) throws VinException {
+    public static String[] scan(String line) throws VinException {
         if (!line.contains(SPLITTER)) { //Remove invalid cases
-            throw new VinException("invalid deadline not added >.<", format);
+            throw new VinException("invalid deadline not added >.<");
         }
         String desc = line.substring(0, line.indexOf("/by"));
         if (desc.trim().isEmpty()) {
-            throw new VinException("No description entered for deadline!!!", format);
+            throw new VinException("No description entered for deadline!!!");
         }
         String date = line.substring(line.indexOf(SPLITTER) + SPLITTER_LENGTH).trim();
         if (date.trim().isEmpty()) {
-            throw new VinException("No date entered for deadline!!!", format);
+            throw new VinException("No date entered for deadline!!!");
         }
-        System.out.println(format.getSpacing() + format.getEmptyLine());
-        System.out.println(format.getSpacing() + "added: " + desc + "(by: " + date + ")");
-        System.out.println(format.getSpacing() + format.getStarLine());
+        System.out.println(MessageFormat.getSpacing() + MessageFormat.getEmptyLine());
+        System.out.println(MessageFormat.getSpacing() + "added: " + desc + "(by: " + date + ")");
+        System.out.println(MessageFormat.getSpacing() + MessageFormat.getStarLine());
         return new String[]{desc, date};
     }
 }

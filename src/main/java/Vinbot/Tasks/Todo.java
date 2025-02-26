@@ -14,9 +14,9 @@ public class Todo extends Task {
         return "T";
     }
 
-    public void scan(MessageFormat format, String line) {
-        System.out.println(format.getSpacing() + format.getEmptyLine());
-        System.out.println(format.getSpacing() + "added: " + line);
-        System.out.println(format.getSpacing() + format.getStarLine());
+    public void scan(String line) {
+        System.out.println(MessageFormat.getSpacing() + MessageFormat.getEmptyLine());
+        System.out.println(MessageFormat.getSpacing() + "added: " + line);
+        System.out.println(MessageFormat.getSpacing() + MessageFormat.getStarLine());
     }
 }

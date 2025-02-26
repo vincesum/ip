@@ -1,8 +1,9 @@
 package Vinbot;
+import Vinbot.MessageFormat;
 
 public class VinException extends Exception {
-    public VinException(String message, MessageFormat format) {
-        super(format.getSpacing() + format.getEmptyLine() + "\n" + format.getSpacing() + message + "\n" + format.getSpacing() + format.getStarLine());
+    public VinException(String message) {
+        super(MessageFormat.getSpacing() + MessageFormat.getEmptyLine() + "\n" + MessageFormat.getSpacing() + message + "\n" + MessageFormat.getSpacing() + MessageFormat.getStarLine());
 
     }
 }

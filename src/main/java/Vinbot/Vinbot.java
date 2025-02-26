@@ -11,7 +11,6 @@ import java.util.Scanner;
 public class Vinbot {
 
     public static final Scanner in = new Scanner(System.in);
-    public static int numberOfElements = 0;
 
     public Vinbot() throws FileNotFoundException {
     }
@@ -19,12 +18,10 @@ public class Vinbot {
     public static void main(String[] args) {
 
         //Initialisation procedure
-        MessageFormat format = new MessageFormat();
-        format.printWelcomeMessage();
+        MessageFormat.printWelcomeMessage();
 
         //Storage
         TaskList tasklist = new TaskList();
-        ArrayList<Task> storage = new ArrayList<>();
 
         //Generate data directory and make Vinbot.txt file
         Storage file = new Storage();
@@ -43,7 +40,7 @@ public class Vinbot {
         if (editor.fileExists) {
             try {
                 Scanner fileIn = editor.readFile();
-                numberOfElements = read.scanMessage(true, format, storage, numberOfElements, fileIn);
+                read.scanMessage(true, tasklist, fileIn);
             }
             catch (FileNotFoundException e) {
                 System.out.println("No previous save detected");
@@ -54,7 +51,7 @@ public class Vinbot {
         disabler.restoreOutput();
 
         //Scan User Input
-        read.scanMessage(true, format, storage,numberOfElements, in);
+        read.scanMessage(true, tasklist, in);
 
         //Say bye
         System.out.println("Bye. Hope to see you again soon!");

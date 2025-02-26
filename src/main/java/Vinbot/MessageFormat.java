@@ -1,35 +1,28 @@
 package Vinbot;
 
 public class MessageFormat {
-    private final String name;
-    private final String emptyLine;
-    private final String starLine;
-    private final String spacing;
+    private static final String name = "Vinbot ^-^";
+    private static final String emptyLine = "----<<<<####****####>>>>----";
+    private static final String starLine = "****************************";
+    private static final String spacing = "    ";
 
-    MessageFormat() {
-        name = "Vinbot ^-^";
-        emptyLine = "----<<<<####****####>>>>----";
-        starLine = "****************************";
-        spacing = "    ";
-    }
-
-    public String getName() {
+    public static String getName() {
         return name;
     }
 
-    public String getEmptyLine() {
+    public static String getEmptyLine() {
         return emptyLine;
     }
 
-    public String getStarLine() {
+    public static String getStarLine() {
         return starLine;
     }
 
-    public String getSpacing() {
+    public static String getSpacing() {
         return spacing;
     }
 
-    public void printWelcomeMessage() {
+    public static void printWelcomeMessage() {
         System.out.println(spacing + "Hello! I'm " + name);
         System.out.println(spacing + "What can I do for you?");
         System.out.println(spacing + "Please enter your current tasks");
@@ -37,13 +30,13 @@ public class MessageFormat {
         System.out.print(spacing + emptyLine + "\n");
     }
 
-    public void printHelpMessage(MessageFormat format) {
-        System.out.println(format.getSpacing() + "Enter \"list\" to view your current tasks");
-        System.out.println(format.getSpacing() + "Enter \"mark\" followed by a number to mark task as complete");
-        System.out.println(format.getSpacing() + "To enter a task, enter \"todo\" followed by your task to store task");
-        System.out.println(format.getSpacing() + "To enter a deadline, enter \"deadline\" followed by your task and \"/by\" due date to store deadline");
-        System.out.println(format.getSpacing() + "To enter an event, enter \"event\" followed by your event and \"/from\" start date \"/to\" end date to store event");
-        System.out.print(format.getSpacing() + "Enter \"unmark\" followed by a number to mark task as incomplete\n");
-        System.out.print(format.getSpacing() + format.getEmptyLine() + "\n");
+    public static void printHelpMessage() {
+        System.out.println(spacing + "Enter \"list\" to view your current tasks");
+        System.out.println(spacing + "Enter \"mark\" followed by a number to mark task as complete");
+        System.out.println(spacing + "To enter a task, enter \"todo\" followed by your task to store task");
+        System.out.println(spacing + "To enter a deadline, enter \"deadline\" followed by your task and \"/by\" due date to store deadline");
+        System.out.println(spacing + "To enter an event, enter \"event\" followed by your event and \"/from\" start date \"/to\" end date to store event");
+        System.out.print(spacing + "Enter \"unmark\" followed by a number to mark task as incomplete\n");
+        System.out.print(spacing + emptyLine + "\n");
     }
 }

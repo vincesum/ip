@@ -1,6 +1,7 @@
 package Vinbot;
 
 import Vinbot.Tasks.Task;
+import Vinbot.Tasks.TaskList;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,31 +33,36 @@ public class Storage {
             }
         }
     }
-    public void writeToFile(ArrayList<Task> storage) throws IOException {
+    public void writeToFile(TaskList storage) throws IOException {
         FileWriter fw = new FileWriter("data/Vinbot.txt");
         fw.write(String.valueOf(revertToText(storage)));
         fw.close();
     }
 
-    public String revertToText(ArrayList<Task> storage) {
+    public String revertToText(TaskList storage) {
         int i = 0;
         StringBuilder text = new StringBuilder();
-        while (storage.size() > i) {
-            switch (storage.get(i).getLabel()) {
-            case "T":
-                text.append("todo ").append(storage.get(i).getDescription()).append("\n");
-                break;
-            case "D":
-                text.append("deadline ").append(storage.get(i).getDescription()).append("/by ").append(storage.get(i).getBy()).append("\n");
-                break;
-            case "E":
-                text.append("event ").append(storage.get(i).getDescription()).append("/from ").append(storage.get(i).getStart()).append(" /to ").append(storage.get(i).getEnd()).append("\n");
-                break;
+        try {
+            while (storage.getNumberOfElements() > i) {
+                switch (storage.getTask(i).getLabel()) {
+                case "T":
+                    text.append("todo ").append(storage.getTask(i).getDescription()).append("\n");
+                    break;
+                case "D":
+                    text.append("deadline ").append(storage.getTask(i).getDescription()).append("/by ").append(storage.getTask(i).getBy()).append("\n");
+                    break;
+                case "E":
+                    text.append("event ").append(storage.getTask(i).getDescription()).append("/from ").append(storage.getTask(i).getStart()).append(" /to ").append(storage.getTask(i).getEnd()).append("\n");
+                    break;
+                }
+                if (storage.getTask(i).getStatusIcon().equals("X")) {
+                    text.append("mark ").append(i + 1).append("\n");
+                }
+                i++;
             }
-            if (storage.get(i).getStatusIcon().equals("X")) {
-                text.append("mark ").append(i + 1).append("\n");
-            }
-            i++;
+        }
+        catch (Exception e) {
+            System.out.println("An error occurred while reverting to text.");
         }
         return text.toString();
     }

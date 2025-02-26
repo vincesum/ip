@@ -15,7 +15,7 @@ public class Parser {
         isActive = status;
     }
 
-    public int scanMessage(boolean isRunning, MessageFormat format, ArrayList<Task> storage, int numberOfElements, Scanner in) {
+    public void scanMessage(boolean isRunning, TaskList taskList, Scanner in) {
         String line;
         while (isRunning) {
             if (!in.hasNextLine()) {  // Prevent NoSuchElementException
@@ -28,65 +28,63 @@ public class Parser {
                 break;
 
             case "list":
-                listItems(format, storage);
+                listItems(taskList);
                 break;
 
             case "help":
-                format.printHelpMessage(format);
+                MessageFormat.printHelpMessage();
                 break;
 
             default:
-                numberOfElements = handleMessage(format, storage, line, numberOfElements);
+                handleMessage(taskList, line);
                 break;
             }
         }
-        return numberOfElements;
     }
 
-    private int handleMessage(MessageFormat format, ArrayList<Task> storage, String line, int numberOfElements) {
+    private void handleMessage(TaskList storage, String line) {
         String command = line.split(" ")[0].toLowerCase(); // Extract the first word
         Storage fileHandler = new Storage();
         switch (command) {
         case "mark":
         case "unmark":
             try {
-                handleMarkMessage(storage, line, numberOfElements, format);
+                handleMarkMessage(storage, line);
             } catch (VinException e) {
                 System.out.println(e.getMessage());
             }
             break;
         case "todo":
             try {
-                numberOfElements = handleTodoMessage(format, storage, line, numberOfElements);
+                handleTodoMessage(storage, line);
             } catch (VinException e) {
                 System.out.println(e.getMessage());
             }
             break;
         case "deadline":
             try {
-                numberOfElements = handleDeadLineMessage(format, storage, line, numberOfElements);
+                handleDeadLineMessage(storage, line);
             } catch (VinException e) {
                 System.out.println(e.getMessage());
             }
             break;
         case "event":
             try {
-                numberOfElements = handleEventMessage(format, storage, line, numberOfElements);
+                handleEventMessage(storage, line);
             } catch (VinException e) {
                 System.out.println(e.getMessage());
             }
             break;
         case "delete":
             try {
-                handleDeleteMessage(storage, line, numberOfElements, format);
-                numberOfElements--;
+                handleDeleteMessage(storage, line);
             } catch (VinException e) {
                 System.out.println(e.getMessage());
             }
             break;
         default:
             try {
-                throw new VinException("Hey! Sorry but I don't know what you've entered. GG.com", format);
+                throw new VinException("Hey! Sorry but I don't know what you've entered. GG.com");
             }
             catch (VinException e) {
                 System.out.println(e.getMessage());
@@ -99,86 +97,84 @@ public class Parser {
         catch (IOException e){
             System.out.println("Something went wrong with writing to Vinbot.txt: " + e.getMessage());
         }
-        return numberOfElements;
     }
 
-    private static int handleEventMessage(MessageFormat result, ArrayList<Task> storage, String line, int numberOfElements) throws VinException {
+    private static void handleEventMessage(TaskList storage, String line) throws VinException {
         line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
         try {
-            String[] eventsData = Event.scan(result, line);
+            String[] eventsData = Event.scan(line);
             Event event = new Event(eventsData[0], eventsData[1], eventsData[2]);
-            storage.add(numberOfElements, event);
-            numberOfElements++;
+            storage.addTask(event);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return numberOfElements;
     }
 
-    private static int handleDeadLineMessage(MessageFormat result, ArrayList<Task> storage, String line, int numberOfElements) throws VinException {
+    private static void handleDeadLineMessage(TaskList storage, String line) throws VinException {
         line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
         try {
-            String[] deadLineData = Deadline.scan(result, line);
+            String[] deadLineData = Deadline.scan(line);
             Deadline deadLine = new Deadline(deadLineData[0], deadLineData[1]);
-            storage.add(numberOfElements, deadLine);
-            numberOfElements++;
+            storage.addTask(deadLine);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return numberOfElements;
     }
 
-    private static int handleTodoMessage(MessageFormat result, ArrayList<Task> storage, String line, int numberOfElements) throws VinException {
+    private static void handleTodoMessage(TaskList storage, String line) throws VinException {
         if (!line.contains(" ")) {
-            throw new VinException("Darn, your description of a todo is empty. Please enter something -.-", result);
+            throw new VinException("Darn, your description of a todo is empty. Please enter something -.-");
         }
         line = line.substring(line.indexOf(" ") + 1).trim(); //records from the second word onwards
         if (line.trim().isEmpty()) {
-            throw new VinException("Darn, your description of a todo is empty. Please enter something -.-", result);
+            throw new VinException("Darn, your description of a todo is empty. Please enter something -.-");
         }
         Todo toDo = new Todo(line);
-        storage.add(numberOfElements, toDo);
-        toDo.scan(result, line);
-        numberOfElements++;
-        return numberOfElements;
+        storage.addTask(toDo);
+        toDo.scan(line);
     }
 
-    private static void handleMarkMessage(ArrayList<Task> storage, String line, int numberOfElements, MessageFormat format) throws VinException {
+    private static void handleMarkMessage(TaskList storage, String line) throws VinException {
         boolean mark = line.toLowerCase().startsWith("mark");
         String intValue = line.replaceAll("[^0-9]", ""); // remove all non-integers
         if (intValue.isEmpty()) {
-            throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"), format);
+            throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"));
         }
         int taskIndex = Integer.parseInt(intValue) - 1;
-        if (taskIndex > numberOfElements - 1 || taskIndex < 0) {
-            throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"), format);
+        if (taskIndex > storage.getNumberOfElements() - 1 || taskIndex < 0) {
+            throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"));
         }
-        storage.get(taskIndex).setDone(mark);
+        storage.getTask(taskIndex).setDone(mark);
         System.out.println((mark ? "    Good job on completing " : "    Oh, you've unmarked the task ") +
-                storage.get(taskIndex).getDescription() + " [" + storage.get(taskIndex).getStatusIcon() + "]" +
+                storage.getTask(taskIndex).getDescription() + " [" + storage.getTask(taskIndex).getStatusIcon() + "]" +
                 (mark ? "" : " ;-;"));
     }
 
-    private static void handleDeleteMessage(ArrayList<Task> storage, String line, int numberOfElements, MessageFormat format) throws VinException {
+    private static void handleDeleteMessage(TaskList storage, String line) throws VinException {
         String intValue = line.replaceAll("[^0-9]", "");
         if (intValue.isEmpty()) {
-            throw new VinException("Error, no tasks were deleted", format);
+            throw new VinException("Error, no tasks were deleted");
         }
         int taskIndex = Integer.parseInt(intValue) - 1;
-        if (taskIndex > numberOfElements - 1 || taskIndex < 0) {
-            throw new VinException("Error, task index to delete is out of bounds ", format);
+        if (taskIndex > storage.getNumberOfElements() - 1 || taskIndex < 0) {
+            throw new VinException("Error, task index to delete is out of bounds ");
         }
-        System.out.println(("    Successfully deleted " + storage.get(taskIndex).getDescription() + " [" + storage.get(taskIndex).getStatusIcon() + "]"));
-        storage.remove(taskIndex);
+        System.out.println(("    Successfully deleted " + storage.getTask(taskIndex).getDescription() + " [" + storage.getTask(taskIndex).getStatusIcon() + "]"));
+        storage.removeTask(taskIndex);
     }
 
-    private static void listItems(MessageFormat format, ArrayList<Task> storage) {
-        System.out.println(format.getSpacing() + "Here are the tasks on your list: ^-^");
+    private static void listItems(TaskList taskList) {
+        System.out.println(MessageFormat.getSpacing() + "Here are the tasks on your list: ^-^");
         int i = 0;
-        while (i < storage.size()) {
-            storage.get(i).print(format, storage, i);
-            i++;
+        while (i < taskList.getNumberOfElements()) {
+            try {
+                taskList.getTask(i).print(taskList, i);
+                i++;
+            }
+            catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
-        System.out.println(format.getSpacing() + format.getStarLine());
+        System.out.println(MessageFormat.getSpacing() + MessageFormat.getStarLine());
     }
 }

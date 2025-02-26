@@ -30,32 +30,35 @@ public class Event extends Task {
     public String toString() {
         return "[E]" + super.toString() + " (from: " + start + " to: " + end + ")";
     }
+
     @Override
     public String getLabel() {
         return "E";
     }
+
     public String getDate() {
         return "(from: " + start + " to: " + end +  ")";
     }
-    public static String[] scan(MessageFormat format, String line) throws Exception {
+
+    public static String[] scan(String line) throws Exception {
         if (!line.contains(FIRST_SPLITTER) || !line.contains(SECOND_SPLITTER)) { //Remove invalid cases
-            throw new VinException("invalid event not added >.<", format);
+            throw new VinException("invalid event not added >.<");
         }
         String desc = line.substring(0, line.indexOf(FIRST_SPLITTER));
         if (desc.trim().isEmpty()) {
-            throw new VinException("Description of event not found!! 0.o Please enter a start date after /from", format);
+            throw new VinException("Description of event not found!! 0.o Please enter a start date after /from");
         }
         String start = line.substring(line.indexOf(FIRST_SPLITTER) + FIRST_SPLITTER_LENGTH, line.indexOf(SECOND_SPLITTER) - SPACE_LENGTH).trim();
         if (start.trim().isEmpty()) {
-            throw new VinException("Start date of event not found!! 0.o Please enter a start date after /from", format);
+            throw new VinException("Start date of event not found!! 0.o Please enter a start date after /from");
         }
         String end = line.substring(line.indexOf(SECOND_SPLITTER) + SECOND_SPLITTER_LENGTH).trim();
         if (end.trim().isEmpty()) {
-            throw new VinException("End date of event not found!! 0.o Please enter an end date after /to", format);
+            throw new VinException("End date of event not found!! 0.o Please enter an end date after /to");
         }
-        System.out.println(format.getSpacing() + format.getEmptyLine());
-        System.out.println(format.getSpacing() + "added: " + desc + "(from: " + start + " to: " + end + ")");
-        System.out.println(format.getSpacing() + format.getStarLine());
+        System.out.println(MessageFormat.getSpacing() + MessageFormat.getEmptyLine());
+        System.out.println(MessageFormat.getSpacing() + "added: " + desc + "(from: " + start + " to: " + end + ")");
+        System.out.println(MessageFormat.getSpacing() + MessageFormat.getStarLine());
         return new String[]{desc, start, end};
     }
 }

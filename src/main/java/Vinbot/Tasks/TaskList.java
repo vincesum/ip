@@ -1,5 +1,6 @@
 package Vinbot.Tasks;
 
+import Vinbot.MessageFormat;
 import Vinbot.VinException;
 
 import java.util.ArrayList;
@@ -17,14 +18,6 @@ public class TaskList {
         return numberOfElements;
     }
 
-    public void addNumberOfElements() {
-        numberOfElements++;
-    }
-
-    public void removeNumberOfElements() {
-        numberOfElements--;
-    }
-
     public void addTask(Task task) {
         storage.add(task);
         numberOfElements++;
@@ -32,9 +25,13 @@ public class TaskList {
 
     public void removeTask(int taskIndex) throws VinException {
         storage.remove(taskIndex);
+        numberOfElements--;
     }
 
     public Task getTask(int taskIndex) throws VinException {
+        if (taskIndex < 0 || taskIndex >= storage.size()) {
+            throw new VinException("Task Index out of bounds!");
+        }
         return storage.get(taskIndex);
     }
 }
