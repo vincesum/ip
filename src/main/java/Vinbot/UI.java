@@ -1,6 +1,9 @@
 package Vinbot;
 
-public class MessageFormat {
+import Vinbot.Tasks.Task;
+import Vinbot.Tasks.TaskList;
+
+public class UI {
     private static final String name = "Vinbot ^-^";
     private static final String emptyLine = "----<<<<####****####>>>>----";
     private static final String starLine = "****************************";
@@ -20,6 +23,24 @@ public class MessageFormat {
 
     public static String getSpacing() {
         return spacing;
+    }
+
+    public static void printLine(String line) {
+        System.out.println(spacing + emptyLine);
+        System.out.println(spacing + line);
+        System.out.println(spacing + starLine);
+    }
+
+    public static void newLine() {
+        System.out.println(UI.getSpacing() + UI.getStarLine());
+    }
+
+    public static void showError(String message) {
+        System.out.println(spacing + emptyLine + "\n" + spacing + message + "\n" + spacing + starLine);
+    }
+
+    public static void printTask(Task task, int i) {
+        System.out.println(spacing + task.toString(i));
     }
 
     public static void printWelcomeMessage() {

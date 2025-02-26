@@ -1,7 +1,6 @@
 package Vinbot.Tasks;
 
-import Vinbot.Vinbot;
-import Vinbot.MessageFormat;
+import Vinbot.UI;
 
 public class Todo extends Task {
     protected static final String label = "T";
@@ -15,8 +14,7 @@ public class Todo extends Task {
     }
 
     public void scan(String line) {
-        System.out.println(MessageFormat.getSpacing() + MessageFormat.getEmptyLine());
-        System.out.println(MessageFormat.getSpacing() + "added: " + line);
-        System.out.println(MessageFormat.getSpacing() + MessageFormat.getStarLine());
+        String output = "added: " + line;
+        UI.printLine(output);
     }
 }

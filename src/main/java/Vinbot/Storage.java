@@ -62,7 +62,7 @@ public class Storage {
             }
         }
         catch (Exception e) {
-            System.out.println("An error occurred while reverting to text.");
+            UI.showError(e.getMessage());
         }
         return text.toString();
     }

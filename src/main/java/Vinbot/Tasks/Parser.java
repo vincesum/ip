@@ -1,9 +1,8 @@
 package Vinbot.Tasks;
 
-import Vinbot.MessageFormat;
+import Vinbot.UI;
 import Vinbot.VinException;
 
-import java.util.ArrayList;
 import java.io.IOException;
 import java.util.Scanner;
 import Vinbot.Storage;
@@ -32,7 +31,7 @@ public class Parser {
                 break;
 
             case "help":
-                MessageFormat.printHelpMessage();
+                UI.printHelpMessage();
                 break;
 
             default:
@@ -51,35 +50,35 @@ public class Parser {
             try {
                 handleMarkMessage(storage, line);
             } catch (VinException e) {
-                System.out.println(e.getMessage());
+                UI.showError(e.getMessage());
             }
             break;
         case "todo":
             try {
                 handleTodoMessage(storage, line);
             } catch (VinException e) {
-                System.out.println(e.getMessage());
+                UI.showError(e.getMessage());
             }
             break;
         case "deadline":
             try {
                 handleDeadLineMessage(storage, line);
             } catch (VinException e) {
-                System.out.println(e.getMessage());
+                UI.showError(e.getMessage());
             }
             break;
         case "event":
             try {
                 handleEventMessage(storage, line);
             } catch (VinException e) {
-                System.out.println(e.getMessage());
+                UI.showError(e.getMessage());
             }
             break;
         case "delete":
             try {
                 handleDeleteMessage(storage, line);
             } catch (VinException e) {
-                System.out.println(e.getMessage());
+                UI.showError(e.getMessage());
             }
             break;
         default:
@@ -87,7 +86,7 @@ public class Parser {
                 throw new VinException("Hey! Sorry but I don't know what you've entered. GG.com");
             }
             catch (VinException e) {
-                System.out.println(e.getMessage());
+                UI.showError(e.getMessage());
             }
             break;
         }
@@ -95,7 +94,7 @@ public class Parser {
             fileHandler.writeToFile(storage);
         }
         catch (IOException e){
-            System.out.println("Something went wrong with writing to Vinbot.txt: " + e.getMessage());
+            UI.showError("Something went wrong with writing to Vinbot.txt: " + e.getMessage());
         }
     }
 
@@ -106,7 +105,7 @@ public class Parser {
             Event event = new Event(eventsData[0], eventsData[1], eventsData[2]);
             storage.addTask(event);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            UI.showError(e.getMessage());
         }
     }
 
@@ -117,7 +116,7 @@ public class Parser {
             Deadline deadLine = new Deadline(deadLineData[0], deadLineData[1]);
             storage.addTask(deadLine);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            UI.showError(e.getMessage());
         }
     }
 
@@ -145,9 +144,12 @@ public class Parser {
             throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"));
         }
         storage.getTask(taskIndex).setDone(mark);
-        System.out.println((mark ? "    Good job on completing " : "    Oh, you've unmarked the task ") +
-                storage.getTask(taskIndex).getDescription() + " [" + storage.getTask(taskIndex).getStatusIcon() + "]" +
-                (mark ? "" : " ;-;"));
+        if (mark) {
+            UI.printLine("Good job on completing " + storage.getTask(taskIndex).getDescription() + " [" + storage.getTask(taskIndex).getStatusIcon() + "]");
+        }
+        else {
+            UI.printLine("Oh, you've unmarked the task " + storage.getTask(taskIndex).getDescription() + " [" + storage.getTask(taskIndex).getStatusIcon() + "] ;-;");
+        }
     }
 
     private static void handleDeleteMessage(TaskList storage, String line) throws VinException {
@@ -159,22 +161,22 @@ public class Parser {
         if (taskIndex > storage.getNumberOfElements() - 1 || taskIndex < 0) {
             throw new VinException("Error, task index to delete is out of bounds ");
         }
-        System.out.println(("    Successfully deleted " + storage.getTask(taskIndex).getDescription() + " [" + storage.getTask(taskIndex).getStatusIcon() + "]"));
+        UI.printLine("Successfully deleted " + storage.getTask(taskIndex).getDescription() + " [" + storage.getTask(taskIndex).getStatusIcon() + "]");
         storage.removeTask(taskIndex);
     }
 
     private static void listItems(TaskList taskList) {
-        System.out.println(MessageFormat.getSpacing() + "Here are the tasks on your list: ^-^");
+        UI.printLine("Here are the tasks on your list: ^-^");
         int i = 0;
         while (i < taskList.getNumberOfElements()) {
             try {
-                taskList.getTask(i).print(taskList, i);
+                UI.printTask(taskList.getTask(i), i);
                 i++;
             }
             catch (Exception e) {
-                System.out.println(e.getMessage());
+                UI.showError(e.getMessage());
             }
         }
-        System.out.println(MessageFormat.getSpacing() + MessageFormat.getStarLine());
+        UI.newLine();
     }
 }

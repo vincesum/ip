@@ -1,6 +1,5 @@
 package Vinbot.Tasks;
 
-import Vinbot.MessageFormat;
 import Vinbot.VinException;
 
 import java.util.ArrayList;

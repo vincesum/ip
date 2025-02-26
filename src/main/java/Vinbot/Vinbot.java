@@ -1,10 +1,8 @@
 package Vinbot;
 
 import Vinbot.Tasks.Parser;
-import Vinbot.Tasks.Task;
 import Vinbot.Tasks.TaskList;
 
-import java.util.ArrayList;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -12,13 +10,10 @@ public class Vinbot {
 
     public static final Scanner in = new Scanner(System.in);
 
-    public Vinbot() throws FileNotFoundException {
-    }
-
     public static void main(String[] args) {
 
         //Initialisation procedure
-        MessageFormat.printWelcomeMessage();
+        UI.printWelcomeMessage();
 
         //Storage
         TaskList tasklist = new TaskList();
@@ -43,7 +38,7 @@ public class Vinbot {
                 read.scanMessage(true, tasklist, fileIn);
             }
             catch (FileNotFoundException e) {
-                System.out.println("No previous save detected");
+                UI.showError("File not found");
             }
         }
 
@@ -54,11 +49,7 @@ public class Vinbot {
         read.scanMessage(true, tasklist, in);
 
         //Say bye
-        System.out.println("Bye. Hope to see you again soon!");
+        UI.printLine("Bye. Hope to see you again soon!");
     }
-
-
-
-
 
 }

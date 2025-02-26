@@ -1,6 +1,6 @@
 package Vinbot.Tasks;
 
-import Vinbot.MessageFormat;
+import Vinbot.UI;
 import Vinbot.VinException;
 
 public class Deadline extends Task {
@@ -8,7 +8,7 @@ public class Deadline extends Task {
     private static final String SPLITTER = "/by";
     private static final int SPLITTER_LENGTH = SPLITTER.length();
     public Deadline(String description, String date) {
-        super(description);
+        super(description.trim());
         this.by = date;
     }
 
@@ -37,9 +37,8 @@ public class Deadline extends Task {
         if (date.trim().isEmpty()) {
             throw new VinException("No date entered for deadline!!!");
         }
-        System.out.println(MessageFormat.getSpacing() + MessageFormat.getEmptyLine());
-        System.out.println(MessageFormat.getSpacing() + "added: " + desc + "(by: " + date + ")");
-        System.out.println(MessageFormat.getSpacing() + MessageFormat.getStarLine());
+        String output = "added: " + desc + " (by: " + date + ")";
+        UI.printLine(output);
         return new String[]{desc, date};
     }
 }

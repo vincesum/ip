@@ -1,6 +1,6 @@
 package Vinbot.Tasks;
 
-import Vinbot.MessageFormat;
+import Vinbot.UI;
 import Vinbot.VinException;
 
 public class Event extends Task {
@@ -12,7 +12,7 @@ public class Event extends Task {
     private final static int SECOND_SPLITTER_LENGTH = SECOND_SPLITTER.length();
     private final static int SPACE_LENGTH = 1;
     public Event(String description, String start, String end) {
-        super(description);
+        super(description.trim());
         this.start = start;
         this.end = end;
     }
@@ -56,9 +56,8 @@ public class Event extends Task {
         if (end.trim().isEmpty()) {
             throw new VinException("End date of event not found!! 0.o Please enter an end date after /to");
         }
-        System.out.println(MessageFormat.getSpacing() + MessageFormat.getEmptyLine());
-        System.out.println(MessageFormat.getSpacing() + "added: " + desc + "(from: " + start + " to: " + end + ")");
-        System.out.println(MessageFormat.getSpacing() + MessageFormat.getStarLine());
+        String output = "added: " + desc + "(from: " + start + " to: " + end + ")";
+        UI.printLine(output);
         return new String[]{desc, start, end};
     }
 }
