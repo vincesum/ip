@@ -1,10 +1,10 @@
 package Vinbot.Tasks;
 
 import Vinbot.Vinbot;
-
+import Vinbot.MessageFormat;
 public class VinException extends Exception {
-    public VinException(String message, Vinbot.printWelcomeMessage format) {
-        super(format.spacing() + format.emptyLine() + "\n" + format.spacing() + message + "\n" + format.spacing() + format.starLine());
+    public VinException(String message, MessageFormat format) {
+        super(format.getSpacing() + format.getEmptyLine() + "\n" + format.getSpacing() + message + "\n" + format.getSpacing() + format.getStarLine());
 
     }
 }

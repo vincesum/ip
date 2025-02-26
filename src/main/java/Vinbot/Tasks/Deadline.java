@@ -1,7 +1,7 @@
 package Vinbot.Tasks;
 
 import Vinbot.Vinbot;
-
+import Vinbot.MessageFormat;
 public class Deadline extends Task {
     private String by;
     private static final String SPLITTER = "/by";
@@ -24,7 +24,7 @@ public class Deadline extends Task {
         return "(by: " + by + ")";
     }
 
-    public static String[] scan(Vinbot.printWelcomeMessage format, String line) throws VinException {
+    public static String[] scan(MessageFormat format, String line) throws VinException {
         if (!line.contains(SPLITTER)) { //Remove invalid cases
             throw new VinException("invalid deadline not added >.<", format);
         }
@@ -36,9 +36,9 @@ public class Deadline extends Task {
         if (date.trim().isEmpty()) {
             throw new VinException("No date entered for deadline!!!", format);
         }
-        System.out.println(format.spacing() + format.emptyLine());
-        System.out.println(format.spacing() + "added: " + desc + "(by: " + date + ")");
-        System.out.println(format.spacing() + format.starLine());
+        System.out.println(format.getSpacing() + format.getEmptyLine());
+        System.out.println(format.getSpacing() + "added: " + desc + "(by: " + date + ")");
+        System.out.println(format.getSpacing() + format.getStarLine());
         return new String[]{desc, date};
     }
 }

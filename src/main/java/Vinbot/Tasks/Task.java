@@ -1,8 +1,7 @@
 package Vinbot.Tasks;
 
 import Vinbot.Vinbot;
-
-import java.lang.reflect.Array;
+import Vinbot.MessageFormat;
 import java.util.ArrayList;
 
 public class Task {
@@ -39,8 +38,8 @@ public class Task {
         return (i + 1) + ")[" + getLabel() + "][" + storage.get(i).getStatusIcon() + "] " + storage.get(i).description + getDate();
     }
 
-    public void print(Vinbot.printWelcomeMessage format, ArrayList<Task> storage, int i) {
-        System.out.println(format.spacing() + toString(storage, i));
+    public void print(MessageFormat format, ArrayList<Task> storage, int i) {
+        System.out.println(format.getSpacing() + toString(storage, i));
     }
 
     public String getDescription() {
