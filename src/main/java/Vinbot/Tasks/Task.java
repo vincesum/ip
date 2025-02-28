@@ -14,14 +14,13 @@ public class Task {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
+    //For overrides
     public String getLabel() {
         return " ";
     }
-
     public String getDate() {
         return "";
     }
-
     public String getBy() {
         return "";
     }

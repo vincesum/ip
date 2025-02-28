@@ -1,11 +1,12 @@
-package Vinbot.Tasks;
+package Vinbot;
 
-import Vinbot.UI;
-import Vinbot.VinException;
+import Vinbot.Tasks.Deadline;
+import Vinbot.Tasks.Event;
+import Vinbot.Tasks.TaskList;
+import Vinbot.Tasks.Todo;
 
 import java.io.IOException;
 import java.util.Scanner;
-import Vinbot.Storage;
 
 public class Parser {
     public boolean isActive;
@@ -17,7 +18,8 @@ public class Parser {
     public void scanMessage(boolean isRunning, TaskList taskList, Scanner in) {
         String line;
         while (isRunning) {
-            if (!in.hasNextLine()) {  // Prevent NoSuchElementException
+            // Prevent NoSuchElementException
+            if (!in.hasNextLine()) {
                 break;
             }
             line = in.nextLine();
@@ -34,7 +36,7 @@ public class Parser {
                 UI.printHelpMessage();
                 break;
 
-            default:
+            default: //In cases where command and text exceeds 1 word in length
                 handleMessage(taskList, line);
                 break;
             }
@@ -42,7 +44,8 @@ public class Parser {
     }
 
     private void handleMessage(TaskList storage, String line) {
-        String command = line.split(" ")[0].toLowerCase(); // Extract the first word
+        //Extract the first word
+        String command = line.split(" ")[0].toLowerCase();
         Storage fileHandler = new Storage();
         switch (command) {
         case "mark":
@@ -81,6 +84,7 @@ public class Parser {
                 UI.showError(e.getMessage());
             }
             break;
+        //Default error message when Vinbot does not get a valid command
         default:
             try {
                 throw new VinException("Hey! Sorry but I don't know what you've entered. GG.com");
@@ -90,6 +94,7 @@ public class Parser {
             }
             break;
         }
+        //Write to storage file to keep track of files after current command
         try {
             fileHandler.writeToFile(storage);
         }
@@ -101,9 +106,11 @@ public class Parser {
     private static void handleEventMessage(TaskList storage, String line) throws VinException {
         line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
         try {
+            //Breaks up the event data entered into description, from date and to date
             String[] eventsData = Event.scan(line);
             Event event = new Event(eventsData[0], eventsData[1], eventsData[2]);
             storage.addTask(event);
+            //Catch exception where event data is entered in an incorrect format
         } catch (Exception e) {
             UI.showError(e.getMessage());
         }
@@ -112,9 +119,11 @@ public class Parser {
     private static void handleDeadLineMessage(TaskList storage, String line) throws VinException {
         line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
         try {
+            //Breaks up the deadline data entered into description and by date
             String[] deadLineData = Deadline.scan(line);
             Deadline deadLine = new Deadline(deadLineData[0], deadLineData[1]);
             storage.addTask(deadLine);
+            //Catch exception where deadline data is entered in an incorrect format
         } catch (Exception e) {
             UI.showError(e.getMessage());
         }
@@ -124,7 +133,8 @@ public class Parser {
         if (!line.contains(" ")) {
             throw new VinException("Darn, your description of a todo is empty. Please enter something -.-");
         }
-        line = line.substring(line.indexOf(" ") + 1).trim(); //records from the second word onwards
+        //Records from the second word onwards
+        line = line.substring(line.indexOf(" ") + 1).trim();
         if (line.trim().isEmpty()) {
             throw new VinException("Darn, your description of a todo is empty. Please enter something -.-");
         }
@@ -135,11 +145,14 @@ public class Parser {
 
     private static void handleMarkMessage(TaskList storage, String line) throws VinException {
         boolean mark = line.toLowerCase().startsWith("mark");
-        String intValue = line.replaceAll("[^0-9]", ""); // remove all non-integers
+        //Remove all non-integers
+        String intValue = line.replaceAll("[^0-9]", "");
+        //Case where int value is not given
         if (intValue.isEmpty()) {
             throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"));
         }
         int taskIndex = Integer.parseInt(intValue) - 1;
+        //Edge cases
         if (taskIndex > storage.getNumberOfElements() - 1 || taskIndex < 0) {
             throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"));
         }
@@ -154,10 +167,12 @@ public class Parser {
 
     private static void handleDeleteMessage(TaskList storage, String line) throws VinException {
         String intValue = line.replaceAll("[^0-9]", "");
+        //Case where int value is not given
         if (intValue.isEmpty()) {
             throw new VinException("Error, no tasks were deleted");
         }
         int taskIndex = Integer.parseInt(intValue) - 1;
+        //Edge cases
         if (taskIndex > storage.getNumberOfElements() - 1 || taskIndex < 0) {
             throw new VinException("Error, task index to delete is out of bounds ");
         }

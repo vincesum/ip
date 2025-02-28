@@ -1,6 +1,5 @@
 package Vinbot;
 
-import Vinbot.Tasks.Parser;
 import Vinbot.Tasks.TaskList;
 
 import java.io.FileNotFoundException;
@@ -25,7 +24,7 @@ public class Vinbot {
         //Record user Input
         Parser read = new Parser(true);
 
-        //Disabling output stream
+        //Save and disable output stream
         SystemOutDisabler disabler = new SystemOutDisabler();
         disabler.saveOutput();
         disabler.disableOutput();
@@ -49,7 +48,7 @@ public class Vinbot {
         read.scanMessage(true, tasklist, in);
 
         //Say bye
-        UI.printLine("Bye. Hope to see you again soon!");
+        UI.printGoodByeMessage();
     }
 
 }

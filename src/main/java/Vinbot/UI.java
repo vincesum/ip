@@ -60,4 +60,8 @@ public class UI {
         System.out.print(spacing + "Enter \"unmark\" followed by a number to mark task as incomplete\n");
         System.out.print(spacing + emptyLine + "\n");
     }
+
+    public static void printGoodByeMessage() {
+        printLine("Bye. Hope to see you again soon!");
+    }
 }
