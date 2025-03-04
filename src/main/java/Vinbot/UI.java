@@ -38,9 +38,13 @@ public class UI {
     public static void showError(String message) {
         System.out.println(spacing + emptyLine + "\n" + spacing + message + "\n" + spacing + starLine);
     }
-
+    //i determines the number allocated to task printed
     public static void printTask(Task task, int i) {
-        System.out.println(spacing + task.toString(i));
+        System.out.println(spacing + task.toString(i, i));
+    }
+    //index determines the number allocated to task printed
+    public static void printFindTask(Task task, int i, int index) {
+        System.out.println(spacing + task.toString(i, index));
     }
 
     public static void printWelcomeMessage() {

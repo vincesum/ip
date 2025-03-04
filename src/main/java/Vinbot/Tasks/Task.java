@@ -31,10 +31,10 @@ public class Task {
         return "";
     }
 
-    public String toString(int i) {
+    public String toString(int i, int index) {
         String string = "";
         try {
-            string = (i + 1) + ")[" + getLabel() + "][" + getStatusIcon() + "] " + getDescription() + " " + getDate();
+            string = "(" + index + ")[" + getLabel() + "][" + getStatusIcon() + "] " + getDescription() + " " + getDate();
         }
         catch (Exception e) {
             UI.showError(e.getMessage());
