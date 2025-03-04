@@ -1,5 +1,6 @@
 package Vinbot.Tasks;
 
+import Vinbot.Date;
 import Vinbot.UI;
 import Vinbot.VinException;
 
@@ -22,7 +23,8 @@ public class Deadline extends Task {
     }
 
     public String getDate() {
-        return "(by: " + by + ")";
+        Date newBy = new Date(by);
+        return "(by: " + newBy.getDate() + ")";
     }
 
     public static String[] scan(String line) throws VinException {
@@ -30,19 +32,29 @@ public class Deadline extends Task {
         if (!line.contains(SPLITTER)) {
             throw new VinException("invalid deadline not added >.<");
         }
+
         //Case where description is empty
         String desc = line.substring(0, line.indexOf("/by"));
         if (desc.trim().isEmpty()) {
             throw new VinException("No description entered for deadline!!!");
         }
+
         //Case where date is empty
-        String date = line.substring(line.indexOf(SPLITTER) + SPLITTER_LENGTH).trim();
-        if (date.trim().isEmpty()) {
+        String rawDate = line.substring(line.indexOf(SPLITTER) + SPLITTER_LENGTH).trim();
+        if (rawDate.trim().isEmpty()) {
             throw new VinException("No date entered for deadline!!!");
         }
-        //Add deadline
-        String output = "added: " + desc + " (by: " + date + ")";
-        UI.printLine(output);
-        return new String[]{desc, date};
+
+        try {
+            //Throws exception if date data is in wrong format
+            Date date = new Date(rawDate.trim());
+            //Add deadline and store date as rawDate data
+            String output = "added: " + desc + " (by: " + date.getDate() + ")";
+            UI.printLine(output);
+            return new String[]{desc, rawDate};
+        }
+        catch (Exception e) {
+            throw new VinException("Date does not follow format of DD/MM/YYYY!");
+        }
     }
 }
