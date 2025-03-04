@@ -84,6 +84,14 @@ public class Parser {
                 UI.showError(e.getMessage());
             }
             break;
+        case "find":
+            try {
+                handleFindMessage(storage, line);
+            } catch (VinException e) {
+                UI.showError(e.getMessage());
+            }
+            break;
+
         //Default error message when Vinbot does not get a valid command
         default:
             try {
@@ -180,6 +188,29 @@ public class Parser {
         storage.removeTask(taskIndex);
     }
 
+    private static void handleFindMessage(TaskList storage, String line) throws VinException {
+        if (!line.contains(" ")) {
+            throw new VinException("Uh oh! You did not enter any message to find!");
+        }
+        String findString = line.substring(line.indexOf(" ") + 1).trim();
+        //Check for cases where space is entered after find
+        if (findString.trim().isEmpty()) {
+            throw new VinException("Uh oh! You did not enter any message to find!");
+        }
+        int index = 1; //initialise a counter for listing found tasks
+        for (int i = 0; i < storage.getNumberOfElements(); i++) {
+            if (storage.getTask(i).getDescription().contains(findString)) {
+                try {
+                    UI.printFindTask(storage.getTask(i), i, index);
+                    index++;
+                }
+                catch (VinException e) {
+                    UI.showError(e.getMessage());
+                }
+            }
+        }
+
+    }
     private static void listItems(TaskList taskList) {
         UI.printLine("Here are the tasks on your list: ^-^");
         int i = 0;
