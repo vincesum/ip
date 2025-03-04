@@ -31,6 +31,7 @@ public class Task {
         return "";
     }
 
+    //Returns a String to display the information of the task
     public String toString(int i, int index) {
         String string = "";
         try {

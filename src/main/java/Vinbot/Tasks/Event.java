@@ -46,6 +46,7 @@ public class Event extends Task {
         return "(from: " + newStart.getDate() + " to: " + newEnd.getDate() +  ")";
     }
 
+    //Returns a String array of size 3 which is broken based on positions of /from and /to
     public static String[] scan(String line) throws Exception {
         //Case where /from or /to is not present
         if (!line.contains(FIRST_SPLITTER) || !line.contains(SECOND_SPLITTER)) {
@@ -69,6 +70,7 @@ public class Event extends Task {
         if (rawEnd.trim().isEmpty()) {
             throw new VinException("End date of event not found!! 0.o Please enter an end date after /to");
         }
+
         try {
             //Checks if start and end date follows proper formatting
             Date start = new Date(rawStart.trim());

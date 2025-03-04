@@ -25,16 +25,19 @@ public class UI {
         return spacing;
     }
 
+    //Standard format for printing message
     public static void printLine(String line) {
         System.out.println(spacing + emptyLine);
         System.out.println(spacing + line);
         System.out.println(spacing + starLine);
     }
 
+    //Standard format for newline
     public static void newLine() {
         System.out.println(UI.getSpacing() + UI.getStarLine());
     }
 
+    //Standard format for exception errors to be printed
     public static void showError(String message) {
         System.out.println(spacing + emptyLine + "\n" + spacing + message + "\n" + spacing + starLine);
     }

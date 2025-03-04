@@ -27,6 +27,7 @@ public class Deadline extends Task {
         return "(by: " + newBy.getDate() + ")";
     }
 
+    //Returns a String array of size 2 which is broken based on position of /by
     public static String[] scan(String line) throws VinException {
         //Case where /by is not present
         if (!line.contains(SPLITTER)) {

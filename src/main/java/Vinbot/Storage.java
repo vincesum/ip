@@ -21,6 +21,7 @@ public class Storage {
         return new Scanner(file);
     }
 
+    //Creates a file if file does not exist at data/Vinbot.txt
     public void makeFile() {
         if (!fileExists) {
             File file = new File("data", "Vinbot.txt");
@@ -33,12 +34,15 @@ public class Storage {
             }
         }
     }
+
+    //Write to file data/Vinbot.txt in String format
     public void writeToFile(TaskList storage) throws IOException {
         FileWriter fw = new FileWriter("data/Vinbot.txt");
         fw.write(String.valueOf(revertToText(storage)));
         fw.close();
     }
 
+    //Converts the tasks stored in storage back into command form to store inside Vinbot.txt
     public String revertToText(TaskList storage) {
         int i = 0;
         StringBuilder text = new StringBuilder();

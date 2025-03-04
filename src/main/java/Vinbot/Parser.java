@@ -15,6 +15,7 @@ public class Parser {
         isActive = status;
     }
 
+    //Scans message based on keywords
     public void scanMessage(boolean isRunning, TaskList taskList, Scanner in) {
         String line;
         while (isRunning) {
@@ -43,6 +44,7 @@ public class Parser {
         }
     }
 
+    //Handle messages exceeding 1 word in length
     private void handleMessage(TaskList storage, String line) {
         //Extract the first word
         String command = line.split(" ")[0].toLowerCase();
@@ -111,6 +113,7 @@ public class Parser {
         }
     }
 
+    //Breaks event message into 3 parts and stores them: description, from date, to date
     private static void handleEventMessage(TaskList storage, String line) throws VinException {
         line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
         try {
@@ -124,6 +127,7 @@ public class Parser {
         }
     }
 
+    //Breaks deadline message into 2 parts and stores them: description, by date
     private static void handleDeadLineMessage(TaskList storage, String line) throws VinException {
         line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
         try {
@@ -137,6 +141,7 @@ public class Parser {
         }
     }
 
+    //Stores todo message
     private static void handleTodoMessage(TaskList storage, String line) throws VinException {
         if (!line.contains(" ")) {
             throw new VinException("Darn, your description of a todo is empty. Please enter something -.-");
@@ -151,6 +156,7 @@ public class Parser {
         toDo.scan(line);
     }
 
+    //Mark message based on index of message if not out of bounds
     private static void handleMarkMessage(TaskList storage, String line) throws VinException {
         boolean mark = line.toLowerCase().startsWith("mark");
         //Remove all non-integers
@@ -160,7 +166,7 @@ public class Parser {
             throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"));
         }
         int taskIndex = Integer.parseInt(intValue) - 1;
-        //Edge cases
+        //Handle edge cases
         if (taskIndex > storage.getNumberOfElements() - 1 || taskIndex < 0) {
             throw new VinException("Error, invalid task " + (mark ? "marked" : "unmarked"));
         }
@@ -173,6 +179,7 @@ public class Parser {
         }
     }
 
+    //Delete message based on index of message if not out of bounds
     private static void handleDeleteMessage(TaskList storage, String line) throws VinException {
         String intValue = line.replaceAll("[^0-9]", "");
         //Case where int value is not given
@@ -180,7 +187,7 @@ public class Parser {
             throw new VinException("Error, no tasks were deleted");
         }
         int taskIndex = Integer.parseInt(intValue) - 1;
-        //Edge cases
+        //Handle edge cases
         if (taskIndex > storage.getNumberOfElements() - 1 || taskIndex < 0) {
             throw new VinException("Error, task index to delete is out of bounds ");
         }
@@ -188,6 +195,7 @@ public class Parser {
         storage.removeTask(taskIndex);
     }
 
+    //Finds message based on keyword
     private static void handleFindMessage(TaskList storage, String line) throws VinException {
         if (!line.contains(" ")) {
             throw new VinException("Uh oh! You did not enter any message to find!");
@@ -197,7 +205,8 @@ public class Parser {
         if (findString.trim().isEmpty()) {
             throw new VinException("Uh oh! You did not enter any message to find!");
         }
-        int index = 1; //initialise a counter for listing found tasks
+        int index = 1; //Initialise a counter for listing found tasks
+        //Print the tasks found
         for (int i = 0; i < storage.getNumberOfElements(); i++) {
             if (storage.getTask(i).getDescription().contains(findString)) {
                 try {
@@ -211,6 +220,8 @@ public class Parser {
         }
 
     }
+
+    //List items from index 1 to the number of tasks
     private static void listItems(TaskList taskList) {
         UI.printLine("Here are the tasks on your list: ^-^");
         int i = 0;
