@@ -3,6 +3,7 @@ package Vinbot;
 import Vinbot.Tasks.Task;
 import Vinbot.Tasks.TaskList;
 
+//UI class to print outputs
 public class UI {
     private static final String name = "Vinbot ^-^";
     private static final String emptyLine = "----<<<<####****####>>>>----";

@@ -2,9 +2,12 @@ package Vinbot.Tasks;
 
 import Vinbot.UI;
 
+//Parent class for Todo, Event and Deadline. Simulates a task
 public class Task {
     protected String description;
     protected boolean isDone;
+
+    //Constructor
     public Task(String description) {
         this.description = description;
         this.isDone = false;

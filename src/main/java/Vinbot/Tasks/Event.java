@@ -12,6 +12,8 @@ public class Event extends Task {
     private final static int FIRST_SPLITTER_LENGTH = FIRST_SPLITTER.length();
     private final static int SECOND_SPLITTER_LENGTH = SECOND_SPLITTER.length();
     private final static int SPACE_LENGTH = 1;
+
+    //Constructor
     public Event(String description, String start, String end) {
         super(description.trim());
         this.start = start;

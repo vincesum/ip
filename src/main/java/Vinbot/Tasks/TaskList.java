@@ -8,6 +8,7 @@ public class TaskList {
     private ArrayList<Task> storage;
     private int numberOfElements;
 
+    //Constructor for empty TaskList
     public TaskList() {
         storage = new ArrayList<>();
         numberOfElements = 0;
@@ -27,6 +28,7 @@ public class TaskList {
         numberOfElements--;
     }
 
+    //Returns Task based on taskindex given
     public Task getTask(int taskIndex) throws VinException {
         if (taskIndex < 0 || taskIndex >= storage.size()) {
             throw new VinException("Task Index out of bounds!");

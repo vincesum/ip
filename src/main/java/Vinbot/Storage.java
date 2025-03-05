@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//Storage class to handle creation of data, storage of data and loading of data
 public class Storage {
     public Path filePath = Paths.get("data", "Vinbot.txt");
     public boolean fileExists = java.nio.file.Files.exists(filePath);

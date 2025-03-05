@@ -8,6 +8,7 @@ import Vinbot.Tasks.Todo;
 import java.io.IOException;
 import java.util.Scanner;
 
+//Parser class to handle user inputs
 public class Parser {
     public boolean isActive;
 
@@ -37,7 +38,8 @@ public class Parser {
                 UI.printHelpMessage();
                 break;
 
-            default: //In cases where command and text exceeds 1 word in length
+            //In cases where command and text exceeds 1 word in length
+            default:
                 handleMessage(taskList, line);
                 break;
             }

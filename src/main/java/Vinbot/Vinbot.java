@@ -5,6 +5,8 @@ import Vinbot.Tasks.TaskList;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+
+//Main class for Vinbot, entry point of program
 public class Vinbot {
 
     public static final Scanner in = new Scanner(System.in);

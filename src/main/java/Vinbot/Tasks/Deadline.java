@@ -8,6 +8,8 @@ public class Deadline extends Task {
     private String by;
     private static final String SPLITTER = "/by";
     private static final int SPLITTER_LENGTH = SPLITTER.length();
+
+    //Constructor
     public Deadline(String description, String date) {
         super(description.trim());
         this.by = date;

@@ -2,6 +2,8 @@ package Vinbot;
 
 import java.io.PrintStream;
 
+
+//Class to disable System.out
 public class SystemOutDisabler {
     PrintStream originalOut;
     public void saveOutput() {
