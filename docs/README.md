@@ -4,6 +4,7 @@ Welcome to Vinbot, your very own task-tracking chatbot.
 This guide will teach you the basic operations of Vinbot to help you better keep track of your tasks!  
 
 
+
 ## Adding tasks to your task list
 This section will teach you how to add various tasks which will be stored in your task list.  
 
@@ -20,6 +21,7 @@ To add an event from a date to a date, enter "event" followed by a space, then e
 followed by a space, then "/from' followed by a space, and the from date in DD/MM/YYYY, followed by "/by"  
 then the by date in DD/MM/YYYY.  
 For example, to enter a event for "Camp" from 25 March 2025 to 26 March 2025, simply enter "event /from 25/03/2025 /to 26/03/2025".  
+
 
 
 ## Commands to access or modify task list
@@ -41,6 +43,7 @@ To display the full list of tasks, enter "list".
 ### Find tasks
 To find tasks that match the given description, enter "find" followed by a space then enter the task that you want to find.
 For example, to find task titled "outing", simply enter "find outing".
+
 
 
 ## Other useful commands
