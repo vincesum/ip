@@ -3,7 +3,7 @@
 Welcome to Vinbot, your very own task-tracking chatbot.
 This guide will teach you the basic operations of Vinbot to help you better keep track of your tasks!  
 
-
+![alt text](image.png)
 
 ## Adding tasks to your task list
 This section will teach you how to add various tasks which will be stored in your task list.  
