@@ -61,11 +61,13 @@ public class UI {
 
     public static void printHelpMessage() {
         System.out.println(spacing + "Enter \"list\" to view your current tasks");
-        System.out.println(spacing + "Enter \"mark\" followed by a number to mark task as complete");
+        System.out.println(spacing + "Enter \"mark\" followed by a task index to mark task as complete");
+        System.out.print(spacing + "Enter \"unmark\" followed by a task index to mark task as incomplete\n");
         System.out.println(spacing + "To enter a task, enter \"todo\" followed by your task to store task");
         System.out.println(spacing + "To enter a deadline, enter \"deadline\" followed by your task and \"/by\" due date to store deadline");
         System.out.println(spacing + "To enter an event, enter \"event\" followed by your event and \"/from\" start date \"/to\" end date to store event");
-        System.out.print(spacing + "Enter \"unmark\" followed by a number to mark task as incomplete\n");
+        System.out.println(spacing + "To delete a task, enter \"delete\" followed by your task index to delete task");
+        System.out.println(spacing + "To find a task, enter \"find\" followed by your task to find task");
         System.out.print(spacing + emptyLine + "\n");
     }
 

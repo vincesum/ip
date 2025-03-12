@@ -178,7 +178,7 @@ public class Parser {
         }
         else {
             UI.printLine("Oh, you've unmarked the task " + storage.getTask(taskIndex).getDescription() + " [" + storage.getTask(taskIndex).getStatusIcon() + "] ;-;");
-        }   
+        }
     }
 
     //Delete message based on index of message if not out of bounds
