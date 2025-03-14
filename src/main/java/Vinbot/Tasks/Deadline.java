@@ -9,7 +9,11 @@ public class Deadline extends Task {
     private static final String SPLITTER = "/by";
     private static final int SPLITTER_LENGTH = SPLITTER.length();
 
-    //Constructor
+    /**
+     * Constructs a Deadline with given description and date
+     * @param description
+     * @param date
+     */
     public Deadline(String description, String date) {
         super(description.trim());
         this.by = date;
@@ -29,7 +33,12 @@ public class Deadline extends Task {
         return "(by: " + newBy.getDate() + ")";
     }
 
-    //Returns a String array of size 2 which is broken based on position of /by
+    /**
+     * Returns a String array of size 2 which is broken based on position of /by
+     * @param line
+     * @return
+     * @throws VinException
+     */
     public static String[] scan(String line) throws VinException {
         //Case where /by is not present
         if (!line.contains(SPLITTER)) {

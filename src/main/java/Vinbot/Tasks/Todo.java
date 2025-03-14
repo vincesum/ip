@@ -5,7 +5,6 @@ import Vinbot.UI;
 public class Todo extends Task {
     protected static final String label = "T";
 
-    //Constructor
     public Todo(String description) {
         super(description);
     }

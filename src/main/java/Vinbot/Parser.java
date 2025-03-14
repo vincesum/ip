@@ -8,19 +8,28 @@ import Vinbot.Tasks.Todo;
 import java.io.IOException;
 import java.util.Scanner;
 
-//Parser class to handle user inputs
+/**
+ * Parser class to handle user inputs.
+ * Parser object is created to take in user inputs and handle them.
+ */
 public class Parser {
+    /** boolean variable isActive to control whether Parser is active*/
     public boolean isActive;
 
     public Parser(boolean status) {
         isActive = status;
     }
 
-    //Scans message based on keywords
+    /**
+     * Scans the user input and handles the message by editing taskList and printing messages
+     * @param isRunning
+     * @param taskList
+     * @param in
+     */
     public void scanMessage(boolean isRunning, TaskList taskList, Scanner in) {
         String line;
         while (isRunning) {
-            // Prevent NoSuchElementException
+            // Prevents NoSuchElementException
             if (!in.hasNextLine()) {
                 break;
             }
@@ -46,7 +55,11 @@ public class Parser {
         }
     }
 
-    //Handle messages exceeding 1 word in length
+    /**
+     * Handles messages exceeding 1 word in length.
+     * @param storage
+     * @param line
+     */
     private void handleMessage(TaskList storage, String line) {
         //Extract the first word
         String command = line.split(" ")[0].toLowerCase();
@@ -115,7 +128,12 @@ public class Parser {
         }
     }
 
-    //Breaks event message into 3 parts and stores them: description, from date, to date
+    /**
+     * Breaks event message into 3 parts and stores them: description, from date, to date.
+     * @param storage
+     * @param line
+     * @throws VinException
+     */
     private static void handleEventMessage(TaskList storage, String line) throws VinException {
         line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
         try {
@@ -129,7 +147,12 @@ public class Parser {
         }
     }
 
-    //Breaks deadline message into 2 parts and stores them: description, by date
+    /**
+     * Breaks deadline message into 2 parts and stores them: description, by date.
+     * @param storage
+     * @param line
+     * @throws VinException
+     */
     private static void handleDeadLineMessage(TaskList storage, String line) throws VinException {
         line = line.substring(line.indexOf(" ") + 1); //records from the second word onwards
         try {
@@ -143,7 +166,12 @@ public class Parser {
         }
     }
 
-    //Stores todo message
+    /**
+     * Stores the todo message created into storage.
+     * @param storage
+     * @param line
+     * @throws VinException
+     */
     private static void handleTodoMessage(TaskList storage, String line) throws VinException {
         if (!line.contains(" ")) {
             throw new VinException("Darn, your description of a todo is empty. Please enter something -.-");
@@ -158,7 +186,12 @@ public class Parser {
         toDo.scan(line);
     }
 
-    //Mark message based on index of message if not out of bounds
+    /**
+     * Marks task based on task index if it is not out of bounds.
+     * @param storage
+     * @param line
+     * @throws VinException
+     */
     private static void handleMarkMessage(TaskList storage, String line) throws VinException {
         boolean mark = line.toLowerCase().startsWith("mark");
         //Remove all non-integers
@@ -181,7 +214,12 @@ public class Parser {
         }
     }
 
-    //Delete message based on index of message if not out of bounds
+    /**
+     * Deletes task based on task index if it is not out of bounds.
+     * @param storage
+     * @param line
+     * @throws VinException
+     */
     private static void handleDeleteMessage(TaskList storage, String line) throws VinException {
         String intValue = line.replaceAll("[^0-9]", "");
         //Case where int value is not given
@@ -197,7 +235,12 @@ public class Parser {
         storage.removeTask(taskIndex);
     }
 
-    //Finds message based on keyword
+    /**
+     * Finds tasks based on keyword and returns list of tasks matching description.
+     * @param storage
+     * @param line
+     * @throws VinException
+     */
     private static void handleFindMessage(TaskList storage, String line) throws VinException {
         if (!line.contains(" ")) {
             throw new VinException("Uh oh! You did not enter any message to find!");
@@ -223,7 +266,10 @@ public class Parser {
 
     }
 
-    //List items from index 1 to the number of tasks
+    /**
+     * Lists all items on taskList.
+     * @param taskList
+     */
     private static void listItems(TaskList taskList) {
         UI.printLine("Here are the tasks on your list: ^-^");
         int i = 0;

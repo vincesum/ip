@@ -13,7 +13,12 @@ public class Event extends Task {
     private final static int SECOND_SPLITTER_LENGTH = SECOND_SPLITTER.length();
     private final static int SPACE_LENGTH = 1;
 
-    //Constructor
+    /**
+     * Constructs an Event with given description, start and end
+     * @param description
+     * @param start
+     * @param end
+     */
     public Event(String description, String start, String end) {
         super(description.trim());
         this.start = start;
@@ -48,7 +53,12 @@ public class Event extends Task {
         return "(from: " + newStart.getDate() + " to: " + newEnd.getDate() +  ")";
     }
 
-    //Returns a String array of size 3 which is broken based on positions of /from and /to
+    /**
+     * Returns a String array of size 3 which is broken based on positions of /from and /to
+     * @param line
+     * @return
+     * @throws Exception
+     */
     public static String[] scan(String line) throws Exception {
         //Case where /from or /to is not present
         if (!line.contains(FIRST_SPLITTER) || !line.contains(SECOND_SPLITTER)) {

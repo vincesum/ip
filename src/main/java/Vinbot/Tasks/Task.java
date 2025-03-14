@@ -34,7 +34,11 @@ public class Task {
         return "";
     }
 
-    //Returns a String to display the information of the task
+    /**
+     * Returns a String to display the information of the task with the current index i and task index index.
+     * @param i
+     * @param index
+     * */
     public String toString(int i, int index) {
         String string = "";
         try {

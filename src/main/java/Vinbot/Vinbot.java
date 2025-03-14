@@ -6,9 +6,11 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 
-//Main class for Vinbot, entry point of program
+/**
+ * Main class for Vinbot, entry point of the Vinbot application.
+ * Initializes the bot and starts the interaction with user.
+ */
 public class Vinbot {
-
     public static final Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
